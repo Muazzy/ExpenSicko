@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!-- change these colors -->
+    <!-- <color name="gradientstart">#3587d0</color>  -->
+    <color name="gradientstart">#7B7AF1</color>
+    <color name="gradientend">#5855AB</color> 
+
+    <!-- <color name="gradientend">#36f1d3</color> -->
+</resources>

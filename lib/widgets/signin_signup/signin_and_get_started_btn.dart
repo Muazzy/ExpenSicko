@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class SignInAndGetStartedButton extends StatelessWidget {
+  final String buttonText;
+  final Color buttonBgColor;
+  final Color buttonFontColor;
+  final void Function() onPressed;
+  final bool fullWidth;
+  const SignInAndGetStartedButton({
+    Key? key,
+    required this.buttonText,
+    required this.buttonBgColor,
+    required this.buttonFontColor,
+    required this.onPressed,
+    required this.fullWidth,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ButtonStyle(
+        elevation: MaterialStateProperty.all(3),
+        backgroundColor: MaterialStateProperty.all(
+          buttonBgColor,
+        ),
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        minimumSize: fullWidth
+            ? MaterialStateProperty.all(
+                const Size(double.infinity, 35),
+              )
+            : null,
+        //now the button color will be same even if it is not focused.
+        overlayColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.pressed)) {
+              return buttonFontColor.withOpacity(0.2);
+            }
+
+            return buttonBgColor; //default color
+          },
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
+        child: Text(
+          buttonText,
+          style: TextStyle(
+            fontSize: 16.0,
+            color: buttonFontColor,
+          ),
+        ),
+      ),
+    );
+  }
+}
