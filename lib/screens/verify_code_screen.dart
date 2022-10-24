@@ -134,8 +134,8 @@ PinTheme defaultPinTheme = PinTheme(
 );
 
 PinTheme focusPinTheme = PinTheme(
-  width: 50,
-  height: 60,
+  width: 45,
+  height: 55,
   decoration: BoxDecoration(
     border: Border.all(
       color: darkPurple,

@@ -50,6 +50,7 @@ import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
+import 'package:expense_tracker_v2/screens/root_screen.dart';
 import 'package:expense_tracker_v2/screens/signin_screen.dart';
 import 'package:expense_tracker_v2/screens/signup_screen.dart';
 import 'package:expense_tracker_v2/screens/verify_code_screen.dart';
@@ -84,7 +85,7 @@ void main() async {
           //     ? Center(child: CircularProgressIndicator())
           //     : LoginWidget();
 
-          return signedIn ? HomeWidget() : const SignInWithNumber();
+          return signedIn ? HomeWidget() : const RootScreen();
         },
       ),
       routes: {
@@ -92,6 +93,7 @@ void main() async {
         '/signUp': (context) => const SignUpScreen(),
         '/numberSignIn': (context) => const SignInWithNumber(),
         '/verifyCode': (context) => const VerifyCode(),
+        '/rootScreen': (context) => const RootScreen(),
       },
     ),
   );
