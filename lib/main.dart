@@ -48,11 +48,13 @@
 
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
 import 'package:expense_tracker_v2/screens/signin_screen.dart';
 import 'package:expense_tracker_v2/screens/signup_screen.dart';
+import 'package:expense_tracker_v2/screens/verify_code_screen.dart';
 import 'package:expense_tracker_v2/views/home.dart';
-// import 'package:expense_tracker_v2/views/login.dart';~
+// import 'package:expense_tracker_v2/views/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -65,10 +67,11 @@ void main() async {
       debugShowCheckedModeBanner: false,
       title: 'Expense Tracker',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          //the scroll overflow color is this one. (secondary)
-          secondary: darkPurple.withOpacity(0.1),
-        ),
+        // colorScheme: ColorScheme.fromSwatch().copyWith(
+        //   //the scroll overflow color is this one. (secondary)
+        //   secondary: darkPurple.withOpacity(0.1),
+        // ),
+        primarySwatch: materialDarkPurple,
       ),
       home: StreamBuilder<bool>(
         initialData: false,
@@ -81,12 +84,14 @@ void main() async {
           //     ? Center(child: CircularProgressIndicator())
           //     : LoginWidget();
 
-          return signedIn ? HomeWidget() : const OnBoardScreen();
+          return signedIn ? HomeWidget() : const SignInWithNumber();
         },
       ),
       routes: {
         '/signIn': (context) => const SignInScreen(),
         '/signUp': (context) => const SignUpScreen(),
+        '/numberSignIn': (context) => const SignInWithNumber(),
+        '/verifyCode': (context) => const VerifyCode(),
       },
     ),
   );
