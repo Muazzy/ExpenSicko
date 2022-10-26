@@ -13,6 +13,11 @@ import 'package:flutter/material.dart';
 
 const Color white = Color(0xffffffff);
 const Color darkPurple = Color(0xff6A68D0);
+
+const Color bgPurple = Color.fromARGB(255, 212, 211, 246);
+
+const Color bgPurplenew = Color.fromARGB(179, 172, 171, 244);
+
 const Color lightPurple = Color(0xff7B7AF1);
 const Color darkPink = Color(0xffED5D74);
 const Color bodyTextColor = Color.fromARGB(255, 0, 0, 0);
