@@ -34,8 +34,8 @@ class _RootScreenState extends State<RootScreen> {
         },
       ),
       floatingActionButton: SizedBox(
-        height: MediaQuery.of(context).size.width * 0.17,
-        width: MediaQuery.of(context).size.width * 0.17,
+        height: MediaQuery.of(context).size.width * 0.2, //0.17
+        width: MediaQuery.of(context).size.width * 0.2,
         child: CustomFAB(onPressed: () {}),
       ),
       body: screens[currentIndex],

@@ -27,28 +27,10 @@ class GlassMorphism extends StatelessWidget {
                 begin: AlignmentDirectional.topStart,
                 end: AlignmentDirectional.bottomEnd,
               ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              // border: Border(
-              //   bottom: BorderSide(
-              //     color: Colors.white.withOpacity(0.5),
-              //     width: 1.5,
-              //   ),
-              //   left: BorderSide(
-              //     color: Colors.white.withOpacity(0.5),
-              //     width: 1,
-              //   ),
-              //   top: BorderSide(
-              //     color: Colors.white.withOpacity(0.5),
-              //     width: 1,
-              //   ),
-              //   right: BorderSide(
-              //     color: Colors.white.withOpacity(0.5),
-              //     width: 1.5,
-              //   ),
-              // ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               border: Border.all(
-                color: Colors.white.withOpacity(0.2),
-                // width: 1,
+                color: Colors.white.withOpacity(0.1),
+                width: 1.5,
               )),
           child: child,
         ),
