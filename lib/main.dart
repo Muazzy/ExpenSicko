@@ -58,6 +58,7 @@ import 'package:expense_tracker_v2/views/home.dart';
 // import 'package:expense_tracker_v2/views/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,6 +74,7 @@ void main() async {
         //   secondary: darkPurple.withOpacity(0.1),
         // ),
         primarySwatch: materialDarkPurple,
+        textTheme: GoogleFonts.interTextTheme(),
       ),
       home: StreamBuilder<bool>(
         initialData: false,
