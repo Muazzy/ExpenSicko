@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
-import 'package:expense_tracker_v2/model/expense_model.dart';
+import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -12,24 +12,23 @@ class HomeScreen extends StatelessWidget {
 
   // DocumentReference doc =
 
-  List<Expense> expenses = [
-    Expense(
-      324000,
-      'WIFI TP-Link N300',
-      DateTime.now(),
-      null,
-      ExpenseCategory.home,
-      isExpense: false,
+  List<AppTransaction> transactions = [
+    AppTransaction(
+      amount: 25,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: IncomeCategory.freelancing,
+      isExpense: true,
     ),
-    Expense(23, 'WIFI', DateTime.now(), null, ExpenseCategory.entertaintment),
-    Expense(67, 'WIFI', DateTime.now(), null, ExpenseCategory.education),
-    Expense(
-        23, 'WIFI', DateTime(2022, 10, 29, 3, 44), null, ExpenseCategory.food),
-    Expense(43, 'WIFI', DateTime(2022, 10, 31, 3, 44), null,
-        ExpenseCategory.groceries),
-    Expense(23, 'wifi', DateTime.now(), null, ExpenseCategory.others),
-    Expense(233, 'WiFi', DateTime.now(), null, ExpenseCategory.travel),
-    Expense(3, 'WIFI', DateTime.now(), null, ExpenseCategory.health),
+    AppTransaction(
+      amount: 25,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: IncomeCategory.freelancing,
+      isExpense: true,
+    ),
   ];
 
   @override
@@ -77,14 +76,14 @@ class HomeScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               padding: EdgeInsets.symmetric(
                   horizontal: MediaQuery.of(context).size.width * 0.075),
-              itemCount: expenses.length,
+              itemCount: transactions.length,
               itemBuilder: (context, index) {
                 return ListTile(
                   isThreeLine: false,
                   contentPadding: EdgeInsets.zero,
                   leading: Container(
                     decoration: BoxDecoration(
-                      color: expenses[index].color.shade100,
+                      color: transactions[index].color.shade100,
                       borderRadius: BorderRadius.all(
                         Radius.circular(10),
                       ),
@@ -92,9 +91,9 @@ class HomeScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(
-                        expenses[index].icon,
+                        transactions[index].icon,
                         size: 32,
-                        color: expenses[index].color.shade900,
+                        color: transactions[index].color.shade900,
                       ),
                     ),
                   ),
@@ -102,11 +101,11 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        expenses[index].name,
+                        transactions[index].name,
                         style: kTitleTextStyle,
                       ),
                       Text(
-                        expenses[index].amountString,
+                        transactions[index].amountString,
                         style: kTitleTextStyle,
                       ),
                     ],
@@ -115,11 +114,11 @@ class HomeScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        expenses[index].categoryString,
+                        transactions[index].categoryString,
                         style: kSubtitleTextStyle,
                       ),
                       Text(
-                        expenses[index].dateString,
+                        transactions[index].dateString,
                         style: kSubtitleTextStyle,
                       ),
                     ],

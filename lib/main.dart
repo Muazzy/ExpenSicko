@@ -48,6 +48,7 @@
 
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/screens/example.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
 import 'package:expense_tracker_v2/screens/root_screen.dart';
@@ -58,10 +59,15 @@ import 'package:expense_tracker_v2/views/home.dart';
 // import 'package:expense_tracker_v2/views/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+  //   SystemUiOverlay.bottom, //This line is used for showing the bottom bar
+  // ]);
+
   await Firebase.initializeApp();
 
   runApp(
@@ -87,7 +93,7 @@ void main() async {
           //     ? Center(child: CircularProgressIndicator())
           //     : LoginWidget();
 
-          return signedIn ? HomeWidget() : const RootScreen();
+          return signedIn ? HomeWidget() : RootScreen();
         },
       ),
       routes: {
