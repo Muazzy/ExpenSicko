@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 // Credit: https://dribbble.com/shots/10072126-Heeded-Dashboard
 class BarChartSample6 extends StatelessWidget {
-  const BarChartSample6({super.key});
+  const BarChartSample6({super.key, required this.expenseAndIncomes});
 
   static const betweenSpace = 0.2;
+  final List expenseAndIncomes;
 
   BarChartGroupData generateGroupData(
     int x,
@@ -15,9 +16,17 @@ class BarChartSample6 extends StatelessWidget {
     double income,
   ) {
     return BarChartGroupData(
+      // showingTooltipIndicators: [0],
+
       x: x,
       groupVertically: true,
-      barRods: [
+      barRods: rods(expense, income),
+    );
+  }
+
+  List<BarChartRodData> rods(double expense, double income) {
+    if (expense != 0 && income != 0) {
+      return [
         BarChartRodData(
           fromY: 0,
           toY: expense,
@@ -26,12 +35,21 @@ class BarChartSample6 extends StatelessWidget {
         ),
         BarChartRodData(
           fromY: expense + betweenSpace,
-          toY: expense + betweenSpace + income,
+          // divided by most highest expense or income & multiplied by 8.
+          toY: (expense + betweenSpace + income) / 8 * 8,
           color: darkPurple,
           width: 8,
         ),
-      ],
-    );
+      ];
+    }
+    return [
+      BarChartRodData(
+        fromY: 0,
+        toY: 8,
+        color: bodyTextColor.withOpacity(0.1),
+        width: 8,
+      ),
+    ];
   }
 
   Widget bottomTitles(double value, TitleMeta meta) {
@@ -43,25 +61,25 @@ class BarChartSample6 extends StatelessWidget {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = 'SU';
-        break;
-      case 1:
         text = 'MO';
         break;
-      case 2:
+      case 1:
         text = 'TU';
         break;
-      case 3:
+      case 2:
         text = 'WE';
         break;
-      case 4:
+      case 3:
         text = 'TH';
         break;
-      case 5:
+      case 4:
         text = 'FR';
         break;
-      case 6:
+      case 5:
         text = 'SA';
+        break;
+      case 6:
+        text = 'SU';
         break;
       default:
         text = '';
@@ -85,6 +103,7 @@ class BarChartSample6 extends StatelessWidget {
           child: BarChart(
             BarChartData(
               alignment: BarChartAlignment.spaceBetween,
+              maxY: 8.5 + betweenSpace,
               titlesData: FlTitlesData(
                 leftTitles: AxisTitles(),
                 rightTitles: AxisTitles(),
@@ -103,8 +122,8 @@ class BarChartSample6 extends StatelessWidget {
               barGroups: [
                 generateGroupData(
                   0,
-                  2,
-                  3,
+                  0,
+                  0,
                 ),
                 generateGroupData(
                   1,
@@ -137,7 +156,6 @@ class BarChartSample6 extends StatelessWidget {
                   3.2,
                 ),
               ],
-              maxY: 8 + (betweenSpace * 1),
             ),
           ),
         ),

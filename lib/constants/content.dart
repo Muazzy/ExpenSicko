@@ -19,3 +19,13 @@ const List<String> months = [
   'November',
   'December',
 ];
+
+const List<String> daysOfTheWeek = [
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
+];

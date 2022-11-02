@@ -69,6 +69,14 @@ class AppTransaction {
     return '${dateTime.day} ${months[dateTime.month - 1]} ${dateTime.year}';
   }
 
+  static String formatDate(DateTime dateTime) =>
+      '${dateTime.day} ${months[dateTime.month - 1]} ${dateTime.year}';
+
+  String weekDayName(int weekday) => daysOfTheWeek[weekday - 1];
+
+  static DateTime get mostRecentMondayFromCurrentDay =>
+      DateTime(now.year, now.month, now.day - (now.weekday - 1));
+
   String get categoryString {
     if (isExpense) {
       switch (category) {

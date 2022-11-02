@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/screens/example.dart';
@@ -18,7 +19,7 @@ class _StatScreenState extends State<StatScreen> {
   //this will change.
   List<AppTransaction> transactions = [
     AppTransaction(
-      amount: 25,
+      amount: 1,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -26,7 +27,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 2,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -34,7 +35,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 3,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -42,7 +43,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 4,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -50,7 +51,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 5,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -58,7 +59,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 6,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -66,7 +67,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 7,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -74,7 +75,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: false,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 8,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -82,7 +83,7 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: true,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 9,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
@@ -90,16 +91,34 @@ class _StatScreenState extends State<StatScreen> {
       isExpense: true,
     ),
     AppTransaction(
-      amount: 25,
+      amount: 10,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
       category: ExpenseCategory.education,
       isExpense: true,
     ),
+    AppTransaction(
+      amount: 10,
+      name: 'aise hee',
+      dateTime: DateTime(2022, 1, 8),
+      document: null,
+      category: ExpenseCategory.education,
+      isExpense: true,
+    ),
+    AppTransaction(
+      amount: 80,
+      name: 'aise hee',
+      dateTime: DateTime(2022, 1, 8),
+      document: null,
+      category: ExpenseCategory.education,
+      isExpense: false,
+    ),
   ];
 
   final data = <String, dynamic>{};
+  List<DateTime> thisWeek = [];
+  final totalIncomeAndExpenseOfEachDayThisWeek = {};
 
   @override
   Widget build(BuildContext context) {
@@ -118,10 +137,71 @@ class _StatScreenState extends State<StatScreen> {
             'color': element.color,
           },
         );
-      } else {
-        print(element.category);
+      }
+      //  else {
+      //   print(element.category);
+      // }
+    }
+
+    // for (var element in transactions) {
+    //   for (var day in thisWeek) {
+    //     if (element.dateTime == day && element.isExpense) {
+    //       totalIncomeAndExpenseOfEachDayThisWeek.update(
+    //         day,
+    //         (value) => {
+    //           'totalAmount': value['totalAmount'] + element.amount,
+    //           'color': element.color,
+    //         },
+    //         ifAbsent: () => {
+    //           'totalAmount': element.amount,
+    //           'color': element.color,
+    //         },
+    //       );
+    //     }
+    //   }
+    // }
+//TODO: kal tak ye done krna hai.,
+    for (var day in thisWeek) {
+      for (var transactionItem in transactions) {
+        if (day != transactionItem.dateTime && transactionItem.isExpense) {
+          totalIncomeAndExpenseOfEachDayThisWeek.update(
+            day,
+            (value) => {
+              'totalExpense': value['totalExpense'] + transactionItem.amount,
+              'totalIncome': value['totalIncome'],
+            },
+            ifAbsent: () => {
+              'totalExpense': transactionItem.amount,
+              'totalIncome': 0,
+            },
+          );
+        }
+
+        if (day != transactionItem.dateTime && !transactionItem.isExpense) {
+          totalIncomeAndExpenseOfEachDayThisWeek.update(
+            day,
+            (value) => {
+              'totalIncome': value['totalIncome'] + transactionItem.amount,
+              'totalExpense': value['totalExpense'],
+            },
+            ifAbsent: () => {
+              'totalIncome': transactionItem.amount,
+              'totalExpense': 0,
+            },
+          );
+        }
       }
     }
+
+    //thisWeek // list of days of this week
+    for (int i = 0; i < 7; i++) {
+      thisWeek.add(
+        AppTransaction.mostRecentMondayFromCurrentDay.add(
+          Duration(days: i),
+        ),
+      );
+    }
+
     return SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,6 +212,9 @@ class _StatScreenState extends State<StatScreen> {
                 data.clear(); //to clear all the expense entries before adding the income entries & vice versa.
                 isExpense = !isExpense;
               });
+
+              // print(thisWeek[0].day);
+              print(totalIncomeAndExpenseOfEachDayThisWeek);
             },
             isExpense: isExpense,
             width: width,
@@ -210,7 +293,9 @@ class _StatScreenState extends State<StatScreen> {
                   padding: const EdgeInsets.only(left: 4),
                   //TODO make this dyanmic too.
                   child: Text(
-                    '11 Oct - 17 Oct 2022', //this will be handled dynamically.
+                    '${AppTransaction.formatDate(thisWeek[0])} - ${AppTransaction.formatDate(
+                      thisWeek[thisWeek.length - 1],
+                    )}', //this will be handled dynamically.
                     style: TextStyle(
                       color: bodyTextColor.withOpacity(0.5),
                       // fontWeight: FontWeight.bold,
@@ -223,7 +308,7 @@ class _StatScreenState extends State<StatScreen> {
           ),
           //TODO: bar chart dyanamically
           //make this dynamical tommorow.
-          BarChartSample6(),
+          const BarChartSample6(expenseAndIncomes: []),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
