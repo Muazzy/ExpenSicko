@@ -48,6 +48,7 @@
 
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/screens/add_transaction_screen.dart';
 import 'package:expense_tracker_v2/screens/example.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
@@ -59,50 +60,57 @@ import 'package:expense_tracker_v2/views/home.dart';
 // import 'package:expense_tracker_v2/views/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'model/data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //   SystemUiOverlay.bottom, //This line is used for showing the bottom bar
-  // ]);
-
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+  );
   await Firebase.initializeApp();
 
   runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Expense Tracker',
-      theme: ThemeData(
-        // colorScheme: ColorScheme.fromSwatch().copyWith(
-        //   //the scroll overflow color is this one. (secondary)
-        //   secondary: darkPurple.withOpacity(0.1),
-        // ),
-        primarySwatch: materialDarkPurple,
-        textTheme: GoogleFonts.interTextTheme(),
-      ),
-      home: StreamBuilder<bool>(
-        initialData: false,
-        stream: authSteam,
-        builder: (context, snapshot) {
-          final signedIn = snapshot.data ?? false;
-          // final siginingIn = snapshot.connectionState.name;
-          // print(siginingIn);
-          // return signedIn
-          //     ? Center(child: CircularProgressIndicator())
-          //     : LoginWidget();
+    ChangeNotifierProvider(
+      lazy: false,
+      create: (context) => Data(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Expense Tracker',
+        theme: ThemeData(
+          // colorScheme: ColorScheme.fromSwatch().copyWith(
+          //   //the scroll overflow color is this one. (secondary)
+          //   secondary: darkPurple.withOpacity(0.1),
+          // ),
+          primarySwatch: materialDarkPurple,
+          textTheme: GoogleFonts.interTextTheme(),
+        ),
+        home: StreamBuilder<bool>(
+          initialData: false,
+          stream: authSteam,
+          builder: (context, snapshot) {
+            final signedIn = snapshot.data ?? false;
+            // final siginingIn = snapshot.connectionState.name;
+            // print(siginingIn);
+            // return signedIn
+            //     ? Center(child: CircularProgressIndicator())
+            //     : LoginWidget();
 
-          return signedIn ? HomeWidget() : RootScreen();
+            return signedIn ? HomeWidget() : AddTransaction();
+          },
+        ),
+        routes: {
+          '/signIn': (context) => const SignInScreen(),
+          '/signUp': (context) => const SignUpScreen(),
+          '/numberSignIn': (context) => const SignInWithNumber(),
+          '/verifyCode': (context) => const VerifyCode(),
+          '/rootScreen': (context) => const RootScreen(),
         },
       ),
-      routes: {
-        '/signIn': (context) => const SignInScreen(),
-        '/signUp': (context) => const SignUpScreen(),
-        '/numberSignIn': (context) => const SignInWithNumber(),
-        '/verifyCode': (context) => const VerifyCode(),
-        '/rootScreen': (context) => const RootScreen(),
-      },
     ),
   );
 }

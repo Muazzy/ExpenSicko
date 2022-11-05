@@ -119,6 +119,48 @@ class AppTransaction {
     }
   }
 
+  static String getCategoryString(bool isExpense, category) {
+    if (isExpense) {
+      switch (category) {
+        case ExpenseCategory.education:
+          return 'Education';
+        case ExpenseCategory.entertaintment:
+          return 'Entertaintment';
+        case ExpenseCategory.food:
+          return 'Food';
+        case ExpenseCategory.groceries:
+          return 'Groceries';
+        case ExpenseCategory.health:
+          return 'Health';
+        case ExpenseCategory.home:
+          return 'Home';
+        case ExpenseCategory.travel:
+          return 'Travel';
+        case ExpenseCategory.others:
+          return 'Others';
+
+        default:
+          return 'Invalid Category';
+      }
+    }
+
+    switch (category) {
+      case IncomeCategory.salary:
+        return 'Salary';
+      case IncomeCategory.rental:
+        return 'Rental';
+      case IncomeCategory.passive:
+        return 'Passive';
+      case IncomeCategory.freelancing:
+        return 'Freelancing';
+      case IncomeCategory.others:
+        return 'Others';
+
+      default:
+        return 'Invalid IncomeCategory';
+    }
+  }
+
   IconData get icon {
     if (isExpense) {
       switch (category) {
@@ -160,6 +202,51 @@ class AppTransaction {
         return Icons.dangerous_outlined;
     }
   }
+
+  static IconData categoryIcon(bool isExpense, category) {
+    if (isExpense) {
+      switch (category) {
+        case ExpenseCategory.education:
+          return Icons.menu_book_outlined;
+        case ExpenseCategory.entertaintment:
+          return Icons.movie_creation_outlined;
+        case ExpenseCategory.food:
+          return Icons.food_bank_outlined;
+        case ExpenseCategory.groceries:
+          return Icons.local_grocery_store_outlined;
+        case ExpenseCategory.health:
+          return Icons.health_and_safety;
+        case ExpenseCategory.home:
+          return Icons.home_outlined;
+        case ExpenseCategory.travel:
+          return Icons.airplanemode_active_outlined;
+        case ExpenseCategory.others:
+          return Icons.question_mark_outlined;
+
+        default:
+          return Icons.dangerous_outlined;
+      }
+    }
+
+    switch (category) {
+      case IncomeCategory.salary:
+        return Icons.attach_money_outlined;
+      case IncomeCategory.rental:
+        return Icons.car_rental_outlined;
+      case IncomeCategory.passive:
+        return Icons.currency_bitcoin_outlined;
+      case IncomeCategory.freelancing:
+        return Icons.work;
+      case IncomeCategory.others:
+        return Icons.question_mark_outlined;
+
+      default:
+        return Icons.dangerous_outlined;
+    }
+  }
+
+  static bool isSameDay(DateTime d1, DateTime d2) =>
+      d1.day == d2.day && d1.month == d2.month && d1.year == d2.year;
 
   MaterialColor get color {
     if (isExpense) {

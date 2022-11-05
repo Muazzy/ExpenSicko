@@ -8,7 +8,7 @@ class BarChartSample6 extends StatelessWidget {
   const BarChartSample6({super.key, required this.expenseAndIncomes});
 
   static const betweenSpace = 0.2;
-  final List expenseAndIncomes;
+  final expenseAndIncomes;
 
   BarChartGroupData generateGroupData(
     int x,

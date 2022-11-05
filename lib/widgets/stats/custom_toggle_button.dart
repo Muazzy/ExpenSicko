@@ -9,9 +9,11 @@ class CustomToggleButton extends StatelessWidget {
     required this.width,
     required this.padding,
     required this.btnText,
+    this.isFullWidth = true,
   }) : super(key: key);
 
   final void Function() onPressed;
+  final bool isFullWidth;
   final bool isExpense;
   final double width;
   final double padding;
@@ -40,9 +42,11 @@ class CustomToggleButton extends StatelessWidget {
                 : BorderRadius.circular(10),
           ),
         ),
-        minimumSize: MaterialStateProperty.all(
-          Size(width * 0.5 - padding, width * 0.12),
-        ),
+        minimumSize: isFullWidth
+            ? MaterialStateProperty.all(
+                Size(width * 0.5 - padding, width * 0.12),
+              )
+            : null,
         //now the button color will be same even if it is not focused.
         overlayColor: MaterialStateProperty.resolveWith(
           (states) {
