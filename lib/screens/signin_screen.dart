@@ -1,16 +1,28 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/social_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
   @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
+    bool isLoading = context.watch<AuthRepository>().isLoading;
     return Scaffold(
       resizeToAvoidBottomInset: true, //to make the textFormFields in view
       backgroundColor: Colors.white,
@@ -42,9 +54,7 @@ class SignInScreen extends StatelessWidget {
                     CustomFormField(
                       labelText: 'Email',
                       isPassword: false,
-                      validatorFunction: (v) {
-                        return null;
-                      },
+                      textEditingController: emailController,
                       primaryColor: darkPurple,
                       textColor: bodyTextColor,
                     ),
@@ -52,24 +62,23 @@ class SignInScreen extends StatelessWidget {
                     CustomFormField(
                       labelText: 'Password',
                       isPassword: true,
-                      validatorFunction: (v) {
-                        return null;
-                      },
+                      textEditingController: passwordController,
                       primaryColor: darkPurple,
                       textColor: bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     SignInAndGetStartedButton(
+                      buttonText: 'Sign in',
+                      isLoading: isLoading,
                       fullWidth: true,
-                      buttonText: 'Sign In',
                       buttonBgColor: darkPurple,
                       buttonFontColor: Colors.white,
-                      onPressed: () {
-                        // Navigator.pushNamedAndRemoveUntil(
-                        //   context,
-                        //   '/home',
-                        //   (route) => false,
-                        // );
+                      onPressed: () async {
+                        context.read<AuthRepository>().loginWithEmail(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              context: context,
+                            );
                       },
                     ),
                     const SizedBox(height: 24),
@@ -90,12 +99,18 @@ class SignInScreen extends StatelessWidget {
                         SocialButton(
                           iconColor: darkPurple,
                           buttonIcon: FontAwesomeIcons.phone,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/numberSignIn');
+                          },
                         ),
                         SocialButton(
                           iconColor: darkPink,
                           buttonIcon: FontAwesomeIcons.google,
-                          onPressed: () {},
+                          onPressed: () {
+                            context
+                                .read<AuthRepository>()
+                                .signInWithGoogle(context);
+                          },
                         ),
                       ],
                     ),

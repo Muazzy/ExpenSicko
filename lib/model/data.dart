@@ -15,6 +15,7 @@ class Data with ChangeNotifier {
   //this will be dynamically fetched
   List<AppTransaction> transactions = [
     AppTransaction(
+      uid: '',
       amount: 10,
       name: 'aise hee',
       dateTime: DateTime(2022, 10, 31),
@@ -23,6 +24,7 @@ class Data with ChangeNotifier {
       isExpense: true,
     ),
     AppTransaction(
+      uid: '',
       amount: 80,
       name: 'aise hee',
       dateTime: DateTime.now(),
@@ -31,6 +33,7 @@ class Data with ChangeNotifier {
       isExpense: false,
     ),
     AppTransaction(
+      uid: '',
       amount: 10,
       name: 'aise hee',
       dateTime: DateTime.now(),
@@ -39,6 +42,7 @@ class Data with ChangeNotifier {
       isExpense: true,
     ),
     AppTransaction(
+      uid: '',
       amount: 80,
       name: 'aise hee',
       dateTime: DateTime.now(),
@@ -47,6 +51,7 @@ class Data with ChangeNotifier {
       isExpense: false,
     ),
     AppTransaction(
+      uid: '',
       amount: 10,
       name: 'aise hee',
       dateTime: DateTime.now(),
@@ -55,6 +60,7 @@ class Data with ChangeNotifier {
       isExpense: true,
     ),
     AppTransaction(
+      uid: '',
       amount: 80,
       name: 'aise hee',
       dateTime: DateTime.now(),

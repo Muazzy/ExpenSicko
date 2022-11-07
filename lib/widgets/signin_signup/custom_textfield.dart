@@ -6,16 +6,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class CustomFormField extends StatefulWidget {
   final String labelText;
   bool isPassword;
-  final String? Function(String?) validatorFunction;
   final Color primaryColor;
   final Color textColor;
+  final TextEditingController textEditingController;
   CustomFormField({
     super.key,
     required this.labelText,
     required this.isPassword,
-    required this.validatorFunction,
     required this.primaryColor,
     required this.textColor,
+    required this.textEditingController,
   });
 
   @override
@@ -33,8 +33,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
       elevation: 1.5,
       shadowColor: bodyTextColor.withOpacity(0.8),
       child: TextFormField(
+        controller: widget.textEditingController,
         obscureText: widget.isPassword,
-        validator: widget.validatorFunction,
         style: TextStyle(
           color: widget.textColor,
           fontSize: 16,

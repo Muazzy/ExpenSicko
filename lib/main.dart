@@ -1,67 +1,16 @@
-// import 'package:expense_tracker_v2/firebase_options.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:flutter/material.dart';
-
-// void main() async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-//       .whenComplete(() => print('Done'));
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       title: 'Expense Tracker',
-//       theme: ThemeData(
-//         // primarySwatch: Colors.blue,
-//         primaryColor: Colors.grey,
-//         scaffoldBackgroundColor: Colors.green,
-//       ),
-//       home: Root(),
-//     );
-//   }
-// }
-
-// class Root extends StatefulWidget {
-//   Root({Key? key}) : super(key: key);
-
-//   @override
-//   State<Root> createState() => _RootState();
-// }
-
-// class _RootState extends State<Root> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Center(
-//         child: Text("Let's Start Coding!"),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/firebase_options.dart';
 import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/screens/add_transaction_screen.dart';
-import 'package:expense_tracker_v2/screens/example.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
 import 'package:expense_tracker_v2/screens/root_screen.dart';
 import 'package:expense_tracker_v2/screens/signin_screen.dart';
 import 'package:expense_tracker_v2/screens/signup_screen.dart';
-import 'package:expense_tracker_v2/screens/verify_code_screen.dart';
-import 'package:expense_tracker_v2/views/home.dart';
-// import 'package:expense_tracker_v2/views/login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -72,45 +21,72 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
-    ChangeNotifierProvider(
-      lazy: false,
-      create: (context) => Data(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Data>(
+          lazy: false,
+          create: (context) => Data(),
+        ),
+        ChangeNotifierProvider<AuthRepository>(
+          create: (context) => AuthRepository(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthRepository>().authState,
+          initialData: null,
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Expense Tracker',
         theme: ThemeData(
-          // colorScheme: ColorScheme.fromSwatch().copyWith(
-          //   //the scroll overflow color is this one. (secondary)
-          //   secondary: darkPurple.withOpacity(0.1),
-          // ),
           primarySwatch: materialDarkPurple,
           textTheme: GoogleFonts.interTextTheme(),
         ),
-        home: StreamBuilder<bool>(
-          initialData: false,
-          stream: authSteam,
-          builder: (context, snapshot) {
-            final signedIn = snapshot.data ?? false;
-            // final siginingIn = snapshot.connectionState.name;
-            // print(siginingIn);
-            // return signedIn
-            //     ? Center(child: CircularProgressIndicator())
-            //     : LoginWidget();
-
-            return signedIn ? HomeWidget() : AddTransaction();
-          },
-        ),
+        home: AuthWrapper(),
         routes: {
           '/signIn': (context) => const SignInScreen(),
           '/signUp': (context) => const SignUpScreen(),
           '/numberSignIn': (context) => const SignInWithNumber(),
-          '/verifyCode': (context) => const VerifyCode(),
           '/rootScreen': (context) => const RootScreen(),
+          '/addTransaction': (context) => const AddTransaction(),
         },
       ),
     ),
   );
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      initialData: null,
+      stream: context.watch<AuthRepository>().authState,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print('waiting state');
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasData) {
+          print(snapshot.hasData);
+          return RootScreen();
+        } else if (snapshot.hasError) {
+          return const ScaffoldMessenger(
+            child: SnackBar(
+              content: Text('Something went wrong'),
+            ),
+          );
+        } else {
+          return const OnBoardScreen();
+        }
+      },
+    );
+  }
 }

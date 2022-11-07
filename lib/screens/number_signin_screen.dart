@@ -1,8 +1,10 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 
 class SignInWithNumber extends StatefulWidget {
   const SignInWithNumber({Key? key}) : super(key: key);
@@ -17,6 +19,8 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
   String completeNumber = '';
   @override
   Widget build(BuildContext context) {
+    bool isLoading = context.watch<AuthRepository>().isLoading;
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -49,6 +53,7 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
               ),
               const SizedBox(height: 20),
               IntlPhoneField(
+                keyboardType: TextInputType.phone,
                 style: const TextStyle(fontSize: 14, height: 0),
                 flagsButtonMargin: const EdgeInsets.only(right: 0, left: 4),
                 flagsButtonPadding: const EdgeInsets.symmetric(horizontal: 4),
@@ -87,19 +92,16 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
               ),
               const SizedBox(height: 24),
               SignInAndGetStartedButton(
+                isLoading: isLoading,
                 buttonText: 'Send the code',
                 buttonBgColor: darkPurple,
                 buttonFontColor: white,
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    print(completeNumber);
-                    Navigator.pushNamed(
-                      context,
-                      '/verifyCode',
-                      arguments: completeNumber,
-                    );
-                    // Navigator
-                    //signup/signin function here
+                    FocusScope.of(context).unfocus();
+                    context
+                        .read<AuthRepository>()
+                        .phoneSignIn(context, completeNumber);
                   }
                 },
                 fullWidth: true,

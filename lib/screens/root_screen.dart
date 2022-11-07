@@ -25,11 +25,12 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
+    int currentIndex = Provider.of<Data>(context).getCurrentIndex;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomBottomNavBar(
-        currentIndex: Provider.of<Data>(context, listen: true).getCurrentIndex,
+        currentIndex: currentIndex,
         onTap: (index) {
           Provider.of<Data>(context, listen: false).currentIndex = index;
         },
@@ -38,7 +39,9 @@ class _RootScreenState extends State<RootScreen> {
         height: MediaQuery.of(context).size.width * 0.2, //0.17
         width: MediaQuery.of(context).size.width * 0.2,
         child: CustomFAB(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/addTransaction');
+          },
         ),
       ),
       body: screens[currentIndex],

@@ -3,9 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
+import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -14,20 +16,58 @@ class HomeScreen extends StatelessWidget {
 
   List<AppTransaction> transactions = [
     AppTransaction(
-      amount: 25,
+      uid: '',
+      amount: 222,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
-      category: IncomeCategory.freelancing,
+      category: ExpenseCategory.entertaintment,
       isExpense: true,
     ),
     AppTransaction(
-      amount: 25,
+      uid: '',
+      amount: 251,
       name: 'aise hee',
       dateTime: DateTime.now(),
       document: null,
       category: IncomeCategory.freelancing,
+      isExpense: false,
+    ),
+    AppTransaction(
+      uid: '',
+      amount: 22,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: ExpenseCategory.education,
       isExpense: true,
+    ),
+    AppTransaction(
+      uid: '',
+      amount: 25,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: IncomeCategory.passive,
+      isExpense: false,
+    ),
+    AppTransaction(
+      uid: '',
+      amount: 250,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: ExpenseCategory.entertaintment,
+      isExpense: true,
+    ),
+    AppTransaction(
+      uid: '',
+      amount: 76,
+      name: 'aise hee',
+      dateTime: DateTime.now(),
+      document: null,
+      category: IncomeCategory.freelancing,
+      isExpense: false,
     ),
   ];
 
@@ -37,7 +77,11 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          UserTile(),
+          UserTile(
+            onTap: () {
+              context.read<AuthRepository>().signOut(context);
+            },
+          ),
           const SizedBox(height: 8),
           BalanceCard(),
           const SizedBox(height: 16),
@@ -353,7 +397,9 @@ class BalanceCard extends StatelessWidget {
 class UserTile extends StatelessWidget {
   const UserTile({
     Key? key,
+    required this.onTap,
   }) : super(key: key);
+  final void Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -366,7 +412,7 @@ class UserTile extends StatelessWidget {
         // EdgeInsets.zero, //for removing the default padding
         contentPadding: EdgeInsets.symmetric(vertical: 0),
         minVerticalPadding: 0,
-        onTap: () {},
+        onTap: onTap,
         // tileColor: Colors.amber.shade50,
         dense: false,
         leading: Container(

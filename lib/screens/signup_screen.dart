@@ -1,16 +1,23 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/social_button.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+
+    final TextEditingController passwordController = TextEditingController();
+    bool isLoading = context.watch<AuthRepository>().isLoading;
+
     return Scaffold(
       resizeToAvoidBottomInset: true, //to make the textFormFields in view
       backgroundColor: Colors.white,
@@ -27,7 +34,9 @@ class SignUpScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: const Icon(
             Icons.arrow_back,
             color: bodyTextColor,
@@ -45,22 +54,19 @@ class SignUpScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 24),
-                    CustomFormField(
-                      labelText: 'Name',
-                      isPassword: false,
-                      validatorFunction: (v) {
-                        return null;
-                      },
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
-                    ),
+                    //TODO implement this functionality to get name of the user.
+                    // CustomFormField(
+                    //   labelText: 'Name',
+                    //   isPassword: false,
+
+                    //   primaryColor: darkPurple,
+                    //   textColor: bodyTextColor,
+                    // ),
                     const SizedBox(height: 24),
                     CustomFormField(
                       labelText: 'Email',
                       isPassword: false,
-                      validatorFunction: (v) {
-                        return null;
-                      },
+                      textEditingController: emailController,
                       primaryColor: darkPurple,
                       textColor: bodyTextColor,
                     ),
@@ -68,9 +74,7 @@ class SignUpScreen extends StatelessWidget {
                     CustomFormField(
                       labelText: 'Password',
                       isPassword: true,
-                      validatorFunction: (v) {
-                        return null;
-                      },
+                      textEditingController: passwordController,
                       primaryColor: darkPurple,
                       textColor: bodyTextColor,
                     ),
@@ -81,11 +85,11 @@ class SignUpScreen extends StatelessWidget {
                       buttonBgColor: darkPurple,
                       buttonFontColor: Colors.white,
                       onPressed: () {
-                        // Navigator.pushNamedAndRemoveUntil(
-                        //   context,
-                        //   '/home',
-                        //   (route) => false,
-                        // );
+                        context.read<AuthRepository>().signUpWithEmail(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                              context: context,
+                            );
                       },
                     ),
                     const SizedBox(height: 24),
@@ -106,12 +110,18 @@ class SignUpScreen extends StatelessWidget {
                         SocialButton(
                           iconColor: darkPurple,
                           buttonIcon: FontAwesomeIcons.phone,
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/numberSignIn');
+                          },
                         ),
                         SocialButton(
                           iconColor: darkPink,
                           buttonIcon: FontAwesomeIcons.google,
-                          onPressed: () {},
+                          onPressed: () {
+                            context
+                                .read<AuthRepository>()
+                                .signInWithGoogle(context);
+                          },
                         ),
                       ],
                     ),

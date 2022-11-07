@@ -1,6 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
-import 'package:expense_tracker_v2/widgets/stats/custom_toggle_button.dart';
 import 'package:flutter/material.dart';
 
 class AddTransaction extends StatefulWidget {
@@ -197,7 +196,9 @@ class _AddTransactionState extends State<AddTransaction> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppTransaction.formatDate(selectedDate),
+                    AppTransaction.isSameDay(selectedDate, DateTime.now())
+                        ? 'Today'
+                        : AppTransaction.formatDate(selectedDate),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: darkPurple,

@@ -1,27 +1,26 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/model/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
-class VerifyCode extends StatefulWidget {
-  // final String phoneNumber;
+class VerifyCode extends StatelessWidget {
+  final TextEditingController textEditingController;
+  final void Function() onPressed;
+  final String phoneNumber;
+
   const VerifyCode({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  State<VerifyCode> createState() => _VerifyCodeState();
-}
-
-class _VerifyCodeState extends State<VerifyCode> {
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    super.key,
+    required this.textEditingController,
+    required this.onPressed,
+    required this.phoneNumber,
+  });
   @override
   Widget build(BuildContext context) {
-    String verificationCode =
-        '696969'; //here will be the original verification code.
-    final phoneNumber = ModalRoute.of(context)!.settings.arguments;
+    bool isLoading = context.watch<AuthRepository>().isLoading;
 
     return Scaffold(
       body: Padding(
@@ -54,8 +53,9 @@ class _VerifyCodeState extends State<VerifyCode> {
             ),
             const SizedBox(height: 20),
             Form(
-              key: formKey,
+              // key: formKey,
               child: Pinput(
+                controller: textEditingController,
                 defaultPinTheme: defaultPinTheme,
                 focusedPinTheme: focusPinTheme,
                 errorPinTheme: errorPinTheme,
@@ -69,22 +69,15 @@ class _VerifyCodeState extends State<VerifyCode> {
                 pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                 length: 6,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                validator: (pin) {
-                  return pin == verificationCode ? null : 'Pin is incorrect';
-                },
               ),
             ),
             const SizedBox(height: 24),
             SignInAndGetStartedButton(
+              isLoading: isLoading,
               buttonText: 'Verify code',
               buttonBgColor: darkPurple,
               buttonFontColor: white,
-              onPressed: () {
-                //actual loging/signing in functionality.
-                if (formKey.currentState!.validate()) {
-                  print('logging in');
-                }
-              },
+              onPressed: onPressed,
               fullWidth: true,
             ),
             const Spacer(),

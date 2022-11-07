@@ -6,11 +6,13 @@ class AppTransaction {
   final double amount;
   final String name;
   final DateTime dateTime;
-  final DocumentReference? document;
+  final String uid;
   final category;
   final bool isExpense;
+  final DocumentReference? document;
 
   AppTransaction({
+    required this.uid,
     required this.amount,
     required this.name,
     required this.dateTime,
@@ -19,20 +21,31 @@ class AppTransaction {
     required this.isExpense,
   });
 
-  AppTransaction._fromMap(
-    Map<String, dynamic> data,
-    this.document,
-  )   : amount = data['amount'] ?? 0,
-        name = data['name'] ?? '',
-        dateTime = data['dateTime'] ?? DateTime.now(),
-        category = data['category'] ?? 'others',
-        isExpense = data['isExpense'] ?? true;
+  // AppTransaction._fromMap(
+  //   Map<String, dynamic> data,
+  //   this.document,
+  // )   : amount = data['amount'] ?? 0,
+  //       name = data['name'] ?? '',
+  //       dateTime = data['dateTime'] ?? DateTime.now(),
+  //       category = data['category'] ?? 'others',
+  //       isExpense = data['isExpense'] ?? true;
 
-  AppTransaction.fromDocument(DocumentSnapshot documentSnapshot)
-      : this._fromMap(
-          documentSnapshot.data() as Map<String, dynamic>,
-          documentSnapshot.reference,
-        );
+  // AppTransaction.fromDocument(DocumentSnapshot documentSnapshot)
+  //     : this._fromMap(
+  //         documentSnapshot.data() as Map<String, dynamic>,
+  //         documentSnapshot.reference,
+  //       );
+
+//TODO update this.
+  Map toMap() {
+    return {
+      'name': name,
+      'amount': amount,
+      'date': Timestamp.fromDate(dateTime),
+      'isExpense': isExpense,
+    };
+  }
+
   String get id => document!.id;
 
   String get dateTimeString => dateTime.toString();
