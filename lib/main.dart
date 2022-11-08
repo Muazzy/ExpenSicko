@@ -70,12 +70,10 @@ class AuthWrapper extends StatelessWidget {
       stream: context.watch<AuthRepository>().authState,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          print('waiting state');
           return const Center(
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          print(snapshot.hasData);
           return RootScreen();
         } else if (snapshot.hasError) {
           return const ScaffoldMessenger(

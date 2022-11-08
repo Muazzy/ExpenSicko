@@ -87,7 +87,8 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 16),
           Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * 0.075),
+              horizontal: MediaQuery.of(context).size.width * 0.075,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
