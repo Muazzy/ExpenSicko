@@ -2,10 +2,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/constants/image_paths.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
+import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -31,14 +33,24 @@ class HomeScreen extends StatelessWidget {
                     onTap: () {
                       context.read<AuthRepository>().signOut(context);
                     },
-                    userImage: Image.network(
-                      currentFirebaseUser.photoURL ??
-                          'https://img.icons8.com/ios-filled/512/who.png',
-                    ),
-                    userName: userName,
+                    userImage: currentFirebaseUser.photoURL != null
+                        ? Image.network(
+                            currentFirebaseUser.photoURL ??
+                                'https://img.icons8.com/ios-filled/512/who.png',
+                          )
+                        : Transform.scale(
+                            scale: 1.5,
+                            child: SvgPicture.asset(defaultUserImg),
+                          ),
+                    userName: userName ?? 'User',
                   ),
                   const SizedBox(height: 8),
-                  BalanceCard(),
+                  BalanceCard(
+                    balance: addAllTransactionAmount(false, transactions) -
+                        addAllTransactionAmount(true, transactions),
+                    expenses: addAllTransactionAmount(true, transactions),
+                    incomes: addAllTransactionAmount(false, transactions),
+                  ),
                   const SizedBox(height: 16),
                   Padding(
                     padding: EdgeInsets.symmetric(
@@ -148,8 +160,14 @@ class HomeScreen extends StatelessWidget {
 class BalanceCard extends StatelessWidget {
   const BalanceCard({
     Key? key,
+    required this.balance,
+    required this.expenses,
+    required this.incomes,
   }) : super(key: key);
 
+  final double balance;
+  final double expenses;
+  final double incomes;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -199,7 +217,7 @@ class BalanceCard extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: '10043.0',
+                      text: balance.toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 32,
@@ -298,7 +316,7 @@ class BalanceCard extends StatelessWidget {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              '8.5000.0',
+                              incomes.toString(),
                               style: kExpenseBodyTextStyle,
                             ),
                           ],
@@ -321,7 +339,7 @@ class BalanceCard extends StatelessWidget {
                             ),
                             SizedBox(height: 8),
                             Text(
-                              '8.5000.0',
+                              expenses.toString(),
                               style: kExpenseBodyTextStyle,
                             ),
                           ],
@@ -348,7 +366,7 @@ class UserTile extends StatelessWidget {
   }) : super(key: key);
   final void Function() onTap;
   final Widget userImage;
-  final String? userName;
+  final String userName;
 
   @override
   Widget build(BuildContext context) {
@@ -396,7 +414,7 @@ class UserTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          userName!, //user name will go here.
+          userName, //user name will go here.
           style: TextStyle(
             color: bodyTextColor,
             fontSize: 16,

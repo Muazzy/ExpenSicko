@@ -13,6 +13,14 @@ class AddTransaction extends StatefulWidget {
 }
 
 class _AddTransactionState extends State<AddTransaction> {
+  @override
+  void dispose() {
+    // dispose it here
+    transactionNameController.dispose();
+    transactionAmountController.dispose();
+    super.dispose();
+  }
+
   bool isExpense = true;
   int selectedCategory = 0;
   DateTime selectedDate = DateTime.now();
@@ -96,8 +104,12 @@ class _AddTransactionState extends State<AddTransaction> {
                 context
                     .read<DataRepositroy>()
                     .addTransaction(
-                      transactionNameController.text,
-                      double.parse(transactionAmountController.text),
+                      transactionNameController.text.isEmpty
+                          ? 'untitled'
+                          : transactionNameController.text,
+                      transactionAmountController.text.isEmpty
+                          ? 0
+                          : double.parse(transactionAmountController.text),
                       selectedDate,
                       isExpense,
                       selectedCategory,
@@ -257,6 +269,9 @@ class _AddTransactionState extends State<AddTransaction> {
                       Expanded(
                         flex: 4,
                         child: TextFormField(
+                          onTap: () {
+                            transactionNameController.clear();
+                          },
                           controller: transactionNameController,
                           // initialValue: 'untitled',
                           style: TextStyle(
@@ -286,6 +301,9 @@ class _AddTransactionState extends State<AddTransaction> {
                       Expanded(
                         child: TextFormField(
                           controller: transactionAmountController,
+                          onTap: () {
+                            transactionAmountController.clear();
+                          },
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: white,

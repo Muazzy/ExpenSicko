@@ -1,119 +1,3 @@
-// import 'package:expense_tracker_v2/model/transaction_model.dart';
-// import 'package:expense_tracker_v2/utils/date_utils.dart';
-// import 'package:flutter/widgets.dart';
-
-// class Data with ChangeNotifier {
-//   Data() {
-//     init();
-//   }
-
-//   void init() {
-//     updatePieChart();
-//     createThisWeek();
-//     updateTotalIncomeAndExpenseOfEachDay();
-//   }
-
-//   //this will be dynamically fetched
-//   List<AppTransaction> transactions = [
-//     // AppTransaction.formatDate(dateTime)
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 10,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime(2022, 10, 31),
-//     //   document: null,
-//     //   category: 1,
-//     //   isExpense: true,
-//     // ),
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 80,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime.now(),
-//     //   document: null,
-//     //   category: 2,
-//     //   isExpense: false,
-//     // ),
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 10,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime.now(),
-//     //   document: null,
-//     //   category: 0,
-//     //   isExpense: true,
-//     // ),
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 80,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime.now(),
-//     //   document: null,
-//     //   category: 2,
-//     //   isExpense: false,
-//     // ),
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 10,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime.now(),
-//     //   document: null,
-//     //   category: 4,
-//     //   isExpense: true,
-//     // ),
-//     // AppTransaction(
-//     //   uid: '',
-//     //   amount: 80,
-//     //   name: 'aise hee',
-//     //   dateTime: DateTime.now(),
-//     //   document: null,
-//     //   category: 4,
-//     //   isExpense: false,
-//     // ),
-//   ];
-
-//   final barChartData = <int, dynamic>{};
-//   Map<int, dynamic> get getBarchartData => barChartData;
-
-//   void updateTotalIncomeAndExpenseOfEachDay() {
-//     for (int i = 0; i < thisWeek.length; i++) {
-//       for (var transactionItem in transactions) {
-//         if (isSameDay(thisWeek[i], transactionItem.dateTime) &&
-//             transactionItem.isExpense) {
-//           barChartData.update(
-//             i,
-//             (value) => {
-//               'totalExpense': value['totalExpense'] + transactionItem.amount,
-//               'totalIncome': value['totalIncome'],
-//             },
-//             ifAbsent: () => {
-//               'totalExpense': transactionItem.amount,
-//               'totalIncome': 0,
-//             },
-//           );
-//         }
-
-//         if (isSameDay(thisWeek[i], transactionItem.dateTime) &&
-//             !transactionItem.isExpense) {
-//           barChartData.update(
-//             i,
-//             (value) => {
-//               'totalIncome': value['totalIncome'] + transactionItem.amount,
-//               'totalExpense': value['totalExpense'],
-//             },
-//             ifAbsent: () => {
-//               'totalIncome': transactionItem.amount,
-//               'totalExpense': 0,
-//             },
-//           );
-//         }
-//       }
-//     }
-
-//     notifyListeners();
-//   }
-// }
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
@@ -134,29 +18,13 @@ class DataRepositroy extends ChangeNotifier {
     notifyListeners();
   }
 
+  //FOR STATS SCREEN
   bool _isExpense = true;
 
   bool get getIsExpense => _isExpense;
 
   void toggleExpense() {
     _isExpense = !_isExpense;
-    pieChartData.clear();
-    notifyListeners();
-    // updatePieChartData();
-    // // print(_isExpense);
-    // print(barChartData);
-  }
-
-  final List<DateTime> _thisWeek = [];
-  List<DateTime> get thisWeek => _thisWeek;
-  void createThisWeek() {
-    for (int i = 0; i < 7; i++) {
-      _thisWeek.add(
-        AppTransaction.mostRecentMondayFromCurrentDay.add(
-          Duration(days: i),
-        ),
-      );
-    }
     notifyListeners();
   }
 
@@ -194,30 +62,4 @@ class DataRepositroy extends ChangeNotifier {
       showSnackBar(context, e.toString());
     }
   }
-
-  final pieChartData = <String, dynamic>{};
-
-  // void updatePieChartData() {
-  //   transactionStream.listen(
-  //     (transactions) {
-  //       for (var element in transactions) {
-  //         if (element.isExpense == _isExpense) {
-  //           pieChartData.update(
-  //             element.categoryString,
-  //             (value) => {
-  //               'totalAmount': value['totalAmount'] + element.amount,
-  //               'color': element.color,
-  //             },
-  //             ifAbsent: () => {
-  //               'totalAmount': element.amount,
-  //               'color': element.color,
-  //             },
-  //           );
-  //         }
-  //       }
-  //     },
-  //     onDone: notifyListeners,
-  //     onError: (e) => print(e),
-  //   );
-  // }
 }

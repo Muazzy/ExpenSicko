@@ -15,3 +15,27 @@ bool isSameDay(DateTime d1, DateTime d2) =>
 
 String formatDate(DateTime dateTime) =>
     '${dateTime.day} ${months[dateTime.month - 1]} ${dateTime.year}';
+
+String weekDayName(int weekday) => daysOfTheWeek[weekday - 1];
+
+DateTime get mostRecentMondayFromCurrentDay =>
+    DateTime(now.year, now.month, now.day - (now.weekday - 1));
+
+// final List<DateTime> _thisWeek = [];
+// List<DateTime> get thisWeek => _thisWeek;
+
+// void createThisWeek() {
+
+// }
+
+List<DateTime> getThisWeek() {
+  List<DateTime> list = [];
+  for (int i = 0; i < 7; i++) {
+    list.add(
+      mostRecentMondayFromCurrentDay.add(
+        Duration(days: i),
+      ),
+    );
+  }
+  return list;
+}
