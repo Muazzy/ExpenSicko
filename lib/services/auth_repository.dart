@@ -16,7 +16,8 @@ class AuthRepository extends ChangeNotifier {
   // GET USER DATA
   // using null check operator since this method should be called only
   // when the user is logged in
-  String get currentUserUid => _auth.currentUser?.uid ?? '';
+  static String get currentUserUid =>
+      FirebaseAuth.instance.currentUser?.uid ?? '';
 
   User get user => _auth.currentUser!;
 
@@ -33,6 +34,7 @@ class AuthRepository extends ChangeNotifier {
   Future<void> signUpWithEmail({
     required String email,
     required String password,
+    required String name,
     required BuildContext context,
   }) async {
     try {
@@ -40,12 +42,11 @@ class AuthRepository extends ChangeNotifier {
       notifyListeners();
       FocusScope.of(context).unfocus();
 
-      await _auth
-          .createUserWithEmailAndPassword(
+      final newUser = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      )
-          .whenComplete(
+      );
+      await newUser.user?.updateDisplayName(name).whenComplete(
         () {
           isLoading = false;
           notifyListeners();
@@ -59,6 +60,8 @@ class AuthRepository extends ChangeNotifier {
         },
       );
     } on FirebaseAuthException catch (e) {
+      isLoading = false;
+      notifyListeners();
       // if you want to display your own custom error message
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -100,6 +103,8 @@ class AuthRepository extends ChangeNotifier {
         },
       );
     } on FirebaseAuthException catch (e) {
+      isLoading = false;
+      notifyListeners();
       showSnackBar(context, e.message!); // Displaying the error message
     }
   }
@@ -137,6 +142,8 @@ class AuthRepository extends ChangeNotifier {
         );
       }
     } on FirebaseAuthException catch (e) {
+      isLoading = false;
+      notifyListeners();
       showSnackBar(context, e.message!); // Displaying the error message
     }
   }

@@ -1,7 +1,8 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,6 @@ class SignInWithNumber extends StatefulWidget {
 }
 
 class _SignInWithNumberState extends State<SignInWithNumber> {
-  final TextEditingController textEditingController = TextEditingController();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String completeNumber = '';
   @override
@@ -53,6 +53,15 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
               ),
               const SizedBox(height: 20),
               IntlPhoneField(
+                // so that the user could not input zero 0 as a first character.
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(
+                    RegExp(r'[0-9]'),
+                  ),
+                  FilteringTextInputFormatter.deny(
+                    RegExp(r'^0+'), //users can't type 0 at 1st position
+                  ),
+                ],
                 keyboardType: TextInputType.phone,
                 style: const TextStyle(fontSize: 14, height: 0),
                 flagsButtonMargin: const EdgeInsets.only(right: 0, left: 4),

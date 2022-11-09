@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/model/data.dart';
+import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/screens/example.dart';
+import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:expense_tracker_v2/widgets/stats/category_item_customtext.dart';
 import 'package:expense_tracker_v2/widgets/stats/custom_switch.dart';
 import 'package:fl_chart/fl_chart.dart';
@@ -70,7 +71,7 @@ class StatScreen extends StatelessWidget {
 
     //thisWeek // list of days of this week
 
-    return Consumer<Data>(
+    return Consumer<DataRepositroy>(
       builder: (context, data, child) {
         // child:
         return SafeArea(
@@ -101,18 +102,18 @@ class StatScreen extends StatelessWidget {
                               borderData: FlBorderData(show: true),
                               sectionsSpace: 0,
                               startDegreeOffset: 270,
-                              sections: data.pieChData
-                                  .map((category, valueMap) => MapEntry(
-                                        category,
-                                        PieChartSectionData(
-                                          showTitle: false,
-                                          color: valueMap['color'],
-                                          radius: 24.0,
-                                          value: valueMap['totalAmount'],
-                                        ),
-                                      ))
-                                  .values
-                                  .toList(),
+                              // sections: data.pieChData
+                              //     .map((category, valueMap) => MapEntry(
+                              //           category,
+                              //           PieChartSectionData(
+                              //             showTitle: false,
+                              //             color: valueMap['color'],
+                              //             radius: 24.0,
+                              //             value: valueMap['totalAmount'],
+                              //           ),
+                              //         ))
+                              //     .values
+                              //     .toList(),
                             ),
                           ),
                         ),
@@ -156,26 +157,26 @@ class StatScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4),
-                      child: Text(
-                        '${AppTransaction.formatDate(data.thisWeek[0])} - ${AppTransaction.formatDate(
-                          data.thisWeek[data.thisWeek.length - 1],
-                        )}', //this will be handled dynamically.
-                        // '',
-                        style: TextStyle(
-                          color: bodyTextColor.withOpacity(0.5),
-                          // fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 4),
+                    //   child: Text(
+                    //     '${formatDate(data.thisWeek[0])} - ${formatDate(
+                    //       data.thisWeek[data.thisWeek.length - 1],
+                    //     )}', //this will be handled dynamically.
+                    //     // '',
+                    //     style: TextStyle(
+                    //       color: bodyTextColor.withOpacity(0.5),
+                    //       // fontWeight: FontWeight.bold,
+                    //       fontSize: 12,
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),
               //TODO: bar chart dyanamically
               //make this dynamical tommorow.
-              BarChartSample6(expenseAndIncomes: data.barChartData),
+              // BarChartSample6(expenseAndIncomes: data.barChartData),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: Row(

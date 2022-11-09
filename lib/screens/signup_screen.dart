@@ -1,5 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
@@ -16,6 +16,9 @@ class SignUpScreen extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
 
     final TextEditingController passwordController = TextEditingController();
+
+    final TextEditingController nameController = TextEditingController();
+
     bool isLoading = context.watch<AuthRepository>().isLoading;
 
     return Scaffold(
@@ -55,13 +58,13 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 24),
                     //TODO implement this functionality to get name of the user.
-                    // CustomFormField(
-                    //   labelText: 'Name',
-                    //   isPassword: false,
-
-                    //   primaryColor: darkPurple,
-                    //   textColor: bodyTextColor,
-                    // ),
+                    CustomFormField(
+                      textEditingController: nameController,
+                      labelText: 'Name',
+                      isPassword: false,
+                      primaryColor: darkPurple,
+                      textColor: bodyTextColor,
+                    ),
                     const SizedBox(height: 24),
                     CustomFormField(
                       labelText: 'Email',
@@ -80,12 +83,14 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     SignInAndGetStartedButton(
+                      isLoading: isLoading,
                       fullWidth: true,
                       buttonText: 'Sign Up',
                       buttonBgColor: darkPurple,
                       buttonFontColor: Colors.white,
                       onPressed: () {
                         context.read<AuthRepository>().signUpWithEmail(
+                              name: nameController.text.trim(),
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                               context: context,

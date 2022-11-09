@@ -1,5 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/model/data.dart';
+import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/screens/home_screen.dart';
 import 'package:expense_tracker_v2/screens/statistics_screen.dart';
 import 'package:expense_tracker_v2/widgets/custom_fab.dart';
@@ -25,14 +25,15 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex = Provider.of<Data>(context).getCurrentIndex;
+    int currentIndex = Provider.of<DataRepositroy>(context).getCurrentIndex;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: currentIndex,
         onTap: (index) {
-          Provider.of<Data>(context, listen: false).currentIndex = index;
+          Provider.of<DataRepositroy>(context, listen: false).currentIndex =
+              index;
         },
       ),
       floatingActionButton: SizedBox(

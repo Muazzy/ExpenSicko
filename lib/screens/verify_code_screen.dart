@@ -1,5 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

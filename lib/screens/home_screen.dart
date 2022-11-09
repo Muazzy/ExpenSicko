@@ -3,8 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
-import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
+import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -12,169 +13,135 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);
 
-  // DocumentReference doc =
-
-  List<AppTransaction> transactions = [
-    AppTransaction(
-      uid: '',
-      amount: 222,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: ExpenseCategory.entertaintment,
-      isExpense: true,
-    ),
-    AppTransaction(
-      uid: '',
-      amount: 251,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: IncomeCategory.freelancing,
-      isExpense: false,
-    ),
-    AppTransaction(
-      uid: '',
-      amount: 22,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: ExpenseCategory.education,
-      isExpense: true,
-    ),
-    AppTransaction(
-      uid: '',
-      amount: 25,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: IncomeCategory.passive,
-      isExpense: false,
-    ),
-    AppTransaction(
-      uid: '',
-      amount: 250,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: ExpenseCategory.entertaintment,
-      isExpense: true,
-    ),
-    AppTransaction(
-      uid: '',
-      amount: 76,
-      name: 'aise hee',
-      dateTime: DateTime.now(),
-      document: null,
-      category: IncomeCategory.freelancing,
-      isExpense: false,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          UserTile(
-            onTap: () {
-              context.read<AuthRepository>().signOut(context);
-            },
-          ),
-          const SizedBox(height: 8),
-          BalanceCard(),
-          const SizedBox(height: 16),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: MediaQuery.of(context).size.width * 0.075,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Recent transactions',
-                  style: TextStyle(
-                    color: bodyTextColor,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+    final currentFirebaseUser = context.read<AuthRepository>().user;
+    final userName = currentFirebaseUser.displayName;
+
+    return StreamBuilder<List<AppTransaction>>(
+        stream: context.read<DataRepositroy>().transactionStream,
+        builder: (context, snapshot) {
+          final transactions = snapshot.data ?? [];
+          if (snapshot.hasData) {
+            return SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  UserTile(
+                    onTap: () {
+                      context.read<AuthRepository>().signOut(context);
+                    },
+                    userImage: Image.network(
+                      currentFirebaseUser.photoURL ??
+                          'https://img.icons8.com/ios-filled/512/who.png',
+                    ),
+                    userName: userName,
                   ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'See All',
-                    style: TextStyle(
-                      color: darkPurple,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: 8),
+                  BalanceCard(),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: MediaQuery.of(context).size.width * 0.075,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Recent transactions',
+                          style: TextStyle(
+                            color: bodyTextColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            'See All',
+                            style: TextStyle(
+                              color: darkPurple,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: ListView.builder(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width * 0.075),
-              itemCount: transactions.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  isThreeLine: false,
-                  contentPadding: EdgeInsets.zero,
-                  leading: Container(
-                    decoration: BoxDecoration(
-                      color: transactions[index].color.shade100,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
+                  const SizedBox(height: 8),
+                  Expanded(
+                    child: ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      padding: EdgeInsets.symmetric(
+                          horizontal:
+                              MediaQuery.of(context).size.width * 0.075),
+                      itemCount: transactions.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          isThreeLine: false,
+                          contentPadding: EdgeInsets.zero,
+                          leading: Container(
+                            decoration: BoxDecoration(
+                              color: transactions[index].color.shade100,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                transactions[index].icon,
+                                size: 32,
+                                color: transactions[index].color.shade900,
+                              ),
+                            ),
+                          ),
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                transactions[index].name,
+                                style: kTitleTextStyle,
+                              ),
+                              Text(
+                                transactions[index].amountString,
+                                style: kTitleTextStyle,
+                              ),
+                            ],
+                          ),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                transactions[index].categoryString,
+                                style: kSubtitleTextStyle,
+                              ),
+                              Text(
+                                transactions[index].dateString,
+                                style: kSubtitleTextStyle,
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        transactions[index].icon,
-                        size: 32,
-                        color: transactions[index].color.shade900,
-                      ),
-                    ),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        transactions[index].name,
-                        style: kTitleTextStyle,
-                      ),
-                      Text(
-                        transactions[index].amountString,
-                        style: kTitleTextStyle,
-                      ),
-                    ],
-                  ),
-                  subtitle: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        transactions[index].categoryString,
-                        style: kSubtitleTextStyle,
-                      ),
-                      Text(
-                        transactions[index].dateString,
-                        style: kSubtitleTextStyle,
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+                  )
+                ],
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('something went wrong ${snapshot.error}'),
+            );
+          }
+          return Container();
+        });
   }
 }
 
@@ -325,17 +292,6 @@ class BalanceCard extends StatelessWidget {
                                 ),
                                 Text(
                                   'Income',
-                                  // style: TextStyle(
-                                  //   color: Colors.white70,
-                                  //   fontWeight: FontWeight.w600,
-                                  //   shadows: [
-                                  //     Shadow(
-                                  //       offset: Offset(1.0, 1.0),
-                                  //       blurRadius: 3.0,
-                                  //       color: Color.fromRGBO(0, 0, 0, 0.5),
-                                  //     ),
-                                  //   ],
-                                  // ),
                                   style: kExpenseHeadingTextStyle,
                                 ),
                               ],
@@ -366,18 +322,6 @@ class BalanceCard extends StatelessWidget {
                             SizedBox(height: 8),
                             Text(
                               '8.5000.0',
-                              // style: TextStyle(
-                              //   // color: Colors.red.shade900,
-                              //   color: white,
-                              //   fontWeight: FontWeight.w600,
-                              //   shadows: [
-                              //     Shadow(
-                              //       offset: Offset(1.0, 2.0),
-                              //       blurRadius: 3.0,
-                              //       color: Color.fromRGBO(0, 0, 0, 0.2),
-                              //     ),
-                              //   ],
-                              // ),
                               style: kExpenseBodyTextStyle,
                             ),
                           ],
@@ -399,8 +343,12 @@ class UserTile extends StatelessWidget {
   const UserTile({
     Key? key,
     required this.onTap,
+    required this.userImage,
+    required this.userName,
   }) : super(key: key);
   final void Function() onTap;
+  final Widget userImage;
+  final String? userName;
 
   @override
   Widget build(BuildContext context) {
@@ -413,9 +361,17 @@ class UserTile extends StatelessWidget {
         // EdgeInsets.zero, //for removing the default padding
         contentPadding: EdgeInsets.symmetric(vertical: 0),
         minVerticalPadding: 0,
-        onTap: onTap,
+        // onTap: onTap,
         // tileColor: Colors.amber.shade50,
         dense: false,
+        trailing: IconButton(
+          tooltip: 'Logout',
+          onPressed: onTap,
+          icon: Icon(
+            Icons.logout,
+            color: darkPink,
+          ),
+        ),
         leading: Container(
           clipBehavior: Clip.antiAliasWithSaveLayer,
           width: MediaQuery.of(context).size.width * 0.11,
@@ -427,7 +383,10 @@ class UserTile extends StatelessWidget {
             ),
           ),
           child: Transform.scale(
-              scale: 1.5, child: SvgPicture.asset('assets/user_pp.svg')),
+            scale: 1,
+            // child: SvgPicture.asset('assets/user_pp.svg'),
+            child: userImage,
+          ),
         ),
         title: Text(
           'Welcome back,',
@@ -437,7 +396,7 @@ class UserTile extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          'Meer M. Muazzam', //user name will go here.
+          userName!, //user name will go here.
           style: TextStyle(
             color: bodyTextColor,
             fontSize: 16,

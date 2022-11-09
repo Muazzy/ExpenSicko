@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/firebase_options.dart';
-import 'package:expense_tracker_v2/model/auth_repository.dart';
+import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/screens/add_transaction_screen.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
 import 'package:expense_tracker_v2/screens/onboard_screen.dart';
@@ -14,7 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-import 'model/data.dart';
+import 'services/data_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,9 +29,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<Data>(
+        ChangeNotifierProvider<DataRepositroy>(
           lazy: false,
-          create: (context) => Data(),
+          create: (context) => DataRepositroy(FirebaseFirestore.instance),
         ),
         ChangeNotifierProvider<AuthRepository>(
           create: (context) => AuthRepository(FirebaseAuth.instance),

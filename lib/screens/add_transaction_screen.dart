@@ -1,6 +1,9 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
+import 'package:expense_tracker_v2/services/data_repository.dart';
+import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddTransaction extends StatefulWidget {
   const AddTransaction({Key? key}) : super(key: key);
@@ -13,6 +16,11 @@ class _AddTransactionState extends State<AddTransaction> {
   bool isExpense = true;
   int selectedCategory = 0;
   DateTime selectedDate = DateTime.now();
+  TextEditingController transactionNameController =
+      TextEditingController(text: 'untitled');
+  TextEditingController transactionAmountController =
+      TextEditingController(text: '0');
+
   @override
   Widget build(BuildContext context) {
     List expenses = ExpenseCategory.values;
@@ -27,6 +35,7 @@ class _AddTransactionState extends State<AddTransaction> {
       if (picked != null && picked != selectedDate) {
         setState(() {
           selectedDate = picked;
+          print(selectedDate);
         });
       }
     }
@@ -83,7 +92,19 @@ class _AddTransactionState extends State<AddTransaction> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context
+                    .read<DataRepositroy>()
+                    .addTransaction(
+                      transactionNameController.text,
+                      double.parse(transactionAmountController.text),
+                      selectedDate,
+                      isExpense,
+                      selectedCategory,
+                      context,
+                    )
+                    .whenComplete(() => Navigator.pop(context));
+              },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(3),
                 backgroundColor: MaterialStateProperty.all(darkPurple),
@@ -125,7 +146,7 @@ class _AddTransactionState extends State<AddTransaction> {
                       setState(() {
                         selectedCategory = index;
                       });
-                      print(index);
+                      // print(index);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -142,28 +163,31 @@ class _AddTransactionState extends State<AddTransaction> {
                           ),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(6.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Icon(
-                                AppTransaction.categoryIcon(
+                                AppTransaction.staticGetcategoryIcon(
                                   isExpense,
                                   isExpense ? expenses[index] : incomes[index],
                                 ),
                                 color: darkPurple,
                               ),
                               Text(
-                                AppTransaction.getCategoryString(
+                                AppTransaction.staticGetCategoryString(
                                   isExpense,
                                   isExpense ? expenses[index] : incomes[index],
                                 ),
+                                // maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: darkPurple,
                                   fontSize: 12,
                                   fontWeight: selectedCategory == index
                                       ? FontWeight.bold
                                       : FontWeight.normal,
+                                  overflow: TextOverflow.fade,
                                 ),
                               ),
                             ],
@@ -196,9 +220,9 @@ class _AddTransactionState extends State<AddTransaction> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppTransaction.isSameDay(selectedDate, DateTime.now())
+                    isSameDay(selectedDate, DateTime.now())
                         ? 'Today'
-                        : AppTransaction.formatDate(selectedDate),
+                        : formatDate(selectedDate),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: darkPurple,
@@ -233,7 +257,8 @@ class _AddTransactionState extends State<AddTransaction> {
                       Expanded(
                         flex: 4,
                         child: TextFormField(
-                          initialValue: 'untitled',
+                          controller: transactionNameController,
+                          // initialValue: 'untitled',
                           style: TextStyle(
                             // fontWeight: FontWeight.bold,
                             color: white.withOpacity(0.8),
@@ -245,7 +270,7 @@ class _AddTransactionState extends State<AddTransaction> {
                             ),
                             // contentPadding: EdgeInsets.symmetric(),
                             icon: Icon(
-                              AppTransaction.categoryIcon(
+                              AppTransaction.staticGetcategoryIcon(
                                 isExpense,
                                 isExpense
                                     ? expenses[selectedCategory]
@@ -260,13 +285,14 @@ class _AddTransactionState extends State<AddTransaction> {
                       ),
                       Expanded(
                         child: TextFormField(
-                          style: TextStyle(
+                          controller: transactionAmountController,
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: white,
                             fontSize: 24,
                           ),
                           keyboardType: TextInputType.number,
-                          initialValue: '0',
+                          // initialValue: '0',
                           decoration: InputDecoration(
                             hintStyle: TextStyle(
                               fontSize: 16,
