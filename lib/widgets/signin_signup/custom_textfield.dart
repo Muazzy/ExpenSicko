@@ -24,6 +24,14 @@ class CustomFormField extends StatefulWidget {
 
 class _CustomFormFieldState extends State<CustomFormField> {
   @override
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    widget.textEditingController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       //cuz the textfeild's border radius is also the same

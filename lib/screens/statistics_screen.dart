@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
