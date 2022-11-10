@@ -122,8 +122,8 @@ class TransactionTile extends StatelessWidget {
                   ),
                 )
                 .whenComplete(() {
-              Navigator.pop(context, true);
               showSnackBar(context, 'Deleted  ${transaction.name}');
+              Navigator.pop(context);
             });
           },
           actionButtonText: 'Delete',

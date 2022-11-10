@@ -49,7 +49,7 @@ void main() async {
           primarySwatch: materialDarkPurple,
           textTheme: GoogleFonts.interTextTheme(),
         ),
-        home: AuthWrapper(),
+        home: const AuthWrapper(),
         routes: {
           '/signIn': (context) => const SignInScreen(),
           '/signUp': (context) => const SignUpScreen(),
@@ -77,7 +77,7 @@ class AuthWrapper extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         } else if (snapshot.hasData) {
-          return RootScreen();
+          return const RootScreen();
         } else if (snapshot.hasError) {
           return const ScaffoldMessenger(
             child: SnackBar(

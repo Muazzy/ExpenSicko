@@ -1,7 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
-import 'package:expense_tracker_v2/constants/image_paths.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String? photoUrl;

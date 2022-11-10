@@ -6,7 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class UserProfile extends StatelessWidget {
-  UserProfile({Key? key}) : super(key: key);
+  const UserProfile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,8 @@ class UserProfile extends StatelessWidget {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
+          //TODO logout and generate report buttons here.
         ],
       ),
     );

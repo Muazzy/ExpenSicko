@@ -1,11 +1,9 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/screens/home_screen.dart';
 import 'package:expense_tracker_v2/screens/statistics_screen.dart';
 import 'package:expense_tracker_v2/widgets/custom_fab.dart';
 import 'package:expense_tracker_v2/widgets/custom_navbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class RootScreen extends StatefulWidget {
@@ -19,8 +17,8 @@ class _RootScreenState extends State<RootScreen> {
   int currentIndex = 0;
 
   List screens = [
-    HomeScreen(),
-    StatScreen(),
+    const HomeScreen(),
+    const StatScreen(),
   ];
 
   @override
