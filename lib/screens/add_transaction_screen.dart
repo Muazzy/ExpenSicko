@@ -1,18 +1,41 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
+import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
 import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class AddTransaction extends StatefulWidget {
-  const AddTransaction({Key? key}) : super(key: key);
+  AddTransaction({
+    Key? key,
+    AppTransaction? transaction,
+    this.isUpdate = false,
+  })  : transaction = transaction ??
+            AppTransaction(
+              dateTime: DateTime.now(),
+              null,
+              amount: 0,
+              name: 'untitled',
+              category: 0,
+              isExpense: true,
+            ),
+        super(key: key);
+
+  final AppTransaction transaction;
+  final bool isUpdate;
 
   @override
   State<AddTransaction> createState() => _AddTransactionState();
 }
 
 class _AddTransactionState extends State<AddTransaction> {
+  late DateTime selectedDate;
+  late TextEditingController transactionNameController;
+  late TextEditingController transactionAmountController;
+  bool isExpense = true;
+  int selectedCategory = 0;
   @override
   void dispose() {
     // dispose it here
@@ -21,20 +44,27 @@ class _AddTransactionState extends State<AddTransaction> {
     super.dispose();
   }
 
-  bool isExpense = true;
-  int selectedCategory = 0;
-  DateTime selectedDate = DateTime.now();
-  TextEditingController transactionNameController =
-      TextEditingController(text: 'untitled');
-  TextEditingController transactionAmountController =
-      TextEditingController(text: '0');
+  @override
+  void initState() {
+    selectedCategory = widget.transaction.category;
+    selectedDate = widget.transaction.dateTime;
+
+    transactionAmountController = TextEditingController(
+      text: widget.transaction.amount.toInt().toString(),
+    );
+    transactionNameController = TextEditingController(
+      text: widget.transaction.name,
+    );
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     List expenses = ExpenseCategory.values;
     List incomes = IncomeCategory.values;
 
-    Future<void> _selectDate(BuildContext context) async {
+    Future<void> selectDate(BuildContext context) async {
       final DateTime? picked = await showDatePicker(
           context: context,
           initialDate: selectedDate,
@@ -43,7 +73,7 @@ class _AddTransactionState extends State<AddTransaction> {
       if (picked != null && picked != selectedDate) {
         setState(() {
           selectedDate = picked;
-          print(selectedDate);
+          // print(selectedDate);
         });
       }
     }
@@ -100,23 +130,46 @@ class _AddTransactionState extends State<AddTransaction> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 9, horizontal: 16),
             child: ElevatedButton(
-              onPressed: () {
-                context
-                    .read<DataRepositroy>()
-                    .addTransaction(
-                      transactionNameController.text.isEmpty
-                          ? 'untitled'
-                          : transactionNameController.text,
-                      transactionAmountController.text.isEmpty
-                          ? 0
-                          : double.parse(transactionAmountController.text),
-                      selectedDate,
-                      isExpense,
-                      selectedCategory,
-                      context,
-                    )
-                    .whenComplete(() => Navigator.pop(context));
-              },
+              onPressed: widget.isUpdate
+                  ? () async {
+                      await widget.transaction
+                          .updateWith(
+                            amount: double.tryParse(
+                                transactionAmountController.text),
+                            category: selectedCategory,
+                            dataTime: selectedDate,
+                            isExpense: isExpense,
+                            name: transactionNameController.text,
+                          )
+                          .onError(
+                            (error, stackTrace) => showSnackBar(
+                              context,
+                              error.toString(),
+                            ),
+                          )
+                          .whenComplete(() {
+                        showSnackBar(context, 'updated');
+                        Navigator.pop(context);
+                      });
+                    }
+                  : () {
+                      context
+                          .read<DataRepositroy>()
+                          .addTransaction(
+                            transactionNameController.text.isEmpty
+                                ? 'untitled'
+                                : transactionNameController.text,
+                            transactionAmountController.text.isEmpty
+                                ? 0
+                                : double.parse(
+                                    transactionAmountController.text),
+                            selectedDate,
+                            isExpense,
+                            selectedCategory,
+                            context,
+                          )
+                          .whenComplete(() => Navigator.pop(context));
+                    },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(3),
                 backgroundColor: MaterialStateProperty.all(darkPurple),
@@ -129,14 +182,23 @@ class _AddTransactionState extends State<AddTransaction> {
                 ),
                 tapTargetSize: MaterialTapTargetSize.padded,
               ),
-              child: const Text(
-                'Save',
-                style: TextStyle(
-                  color: white,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 0.8,
-                ),
-              ),
+              child: widget.isUpdate
+                  ? const Text(
+                      'Update',
+                      style: TextStyle(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                      ),
+                    )
+                  : const Text(
+                      'Save',
+                      style: TextStyle(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.8,
+                      ),
+                    ),
             ),
           ),
         ],
@@ -241,7 +303,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => _selectDate(context),
+                    onPressed: () => selectDate(context),
                     icon: const Icon(
                       Icons.calendar_month,
                       color: darkPink,
@@ -250,9 +312,6 @@ class _AddTransactionState extends State<AddTransaction> {
                 ],
               ),
             ),
-            // Divider(
-            //   color: darkPink.withOpacity(0.5),
-            // ),
             const SizedBox(height: 10),
             Form(
               child: Container(
@@ -319,6 +378,9 @@ class _AddTransactionState extends State<AddTransaction> {
                             border: InputBorder.none,
                             hintText: 'Amount',
                           ),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                          ],
                         ),
                       ),
                     ],

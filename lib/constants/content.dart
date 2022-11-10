@@ -29,3 +29,6 @@ const List<String> daysOfTheWeek = [
   'Saturday',
   'Sunday',
 ];
+
+const String logoutDialogHeading = 'Logging out';
+const String logoutDialogBody = 'Are you sure you want to logout?';

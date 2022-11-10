@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/firebase_options.dart';
+import 'package:expense_tracker_v2/screens/user_profile.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/screens/add_transaction_screen.dart';
 import 'package:expense_tracker_v2/screens/number_signin_screen.dart';
@@ -54,7 +55,8 @@ void main() async {
           '/signUp': (context) => const SignUpScreen(),
           '/numberSignIn': (context) => const SignInWithNumber(),
           '/rootScreen': (context) => const RootScreen(),
-          '/addTransaction': (context) => const AddTransaction(),
+          '/addTransaction': (context) => AddTransaction(),
+          '/userProfile': (context) => UserProfile()
         },
       ),
     ),

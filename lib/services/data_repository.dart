@@ -62,4 +62,6 @@ class DataRepositroy extends ChangeNotifier {
       showSnackBar(context, e.toString());
     }
   }
+
+  Future<void> delete(S) async {}
 }

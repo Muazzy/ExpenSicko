@@ -19,17 +19,19 @@ getPieChartData(bool isExpense, List<AppTransaction> transactions) {
   Map<String, dynamic> pieChartData = {};
   for (var element in transactions) {
     if (element.isExpense == isExpense) {
-      pieChartData.update(
-        element.categoryString,
-        (value) => {
-          'totalAmount': value['totalAmount'] + element.amount,
-          'color': element.color,
-        },
-        ifAbsent: () => {
-          'totalAmount': element.amount,
-          'color': element.color,
-        },
-      );
+      if (element.amount != 0) {
+        pieChartData.update(
+          element.categoryString,
+          (value) => {
+            'totalAmount': value['totalAmount'] + element.amount,
+            'color': element.color,
+          },
+          ifAbsent: () => {
+            'totalAmount': element.amount,
+            'color': element.color,
+          },
+        );
+      }
     }
   }
   return pieChartData;

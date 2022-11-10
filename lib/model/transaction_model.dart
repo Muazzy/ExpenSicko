@@ -26,21 +26,19 @@ class AppTransaction {
   final double amount;
   final String name;
   final DateTime dateTime;
-  final String uid;
+  // final String uid;
   final int category;
   final bool isExpense;
   final DocumentReference? _document;
 
-  // AppTransaction(
-  //   this._document, {
-  //   required this.uid,
-  //   required this.amount,
-  //   required this.name,
-  //   required this.dateTime,
-  //   // required this.document,
-  //   required this.category,
-  //   required this.isExpense,
-  // });
+  AppTransaction(
+    this._document, {
+    required this.amount,
+    required this.name,
+    required this.dateTime,
+    required this.category,
+    required this.isExpense,
+  });
 
   //convert json to AppTransaction object.
   AppTransaction.fromDocument(DocumentSnapshot transactionDoc)
@@ -55,7 +53,6 @@ class AppTransaction {
         amount = data['amount'] ?? 0,
         category = data['category'] ?? -1,
         isExpense = data['isExpense'] ?? true,
-        uid = data['uid'] ?? '',
         dateTime = data['dateTime']?.toDate() ?? DateTime.now();
 
 // // update this.
@@ -79,7 +76,7 @@ class AppTransaction {
   Future<void> updateWith({
     double? amount,
     String? name,
-    String? category,
+    int? category,
     DateTime? dataTime,
     bool? isExpense,
   }) {
