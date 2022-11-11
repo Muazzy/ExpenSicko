@@ -1,9 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.expense_tracker_v2">
    <application
-        android:label="expense_tracker_v2"
+        android:label="ExpenSicko"
         android:name="${applicationName}"
-        android:icon="@mipmap/splash_icon">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:exported="true"
