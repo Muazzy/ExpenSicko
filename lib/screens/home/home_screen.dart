@@ -110,7 +110,6 @@ class HomeScreen extends StatelessWidget {
                                 ),
                                 alignment: Alignment.centerRight,
                                 //TODO add value param here
-
                                 // value: ,
                                 // value: 'hello',
                                 //     // '${context.watch<DataRepositroy>().getFirstIsExpense.toString()} ${context.watch<DataRepositroy>().getFirstCategory}',
