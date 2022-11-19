@@ -1,4 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:flutter/material.dart';
 
 class CustomFAB extends StatelessWidget {
@@ -11,6 +12,7 @@ class CustomFAB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      heroTag: fabHeroTag,
       elevation: 0,
       backgroundColor: darkPurple,
       clipBehavior: Clip.hardEdge,

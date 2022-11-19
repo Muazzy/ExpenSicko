@@ -1,4 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {
@@ -8,10 +9,12 @@ class UserTile extends StatelessWidget {
     required this.userImage,
     required this.userName,
     required this.onProfileImageTap,
+    required this.userImageHeroTag,
   }) : super(key: key);
   final void Function() onTap;
   final Widget userImage;
   final String userName;
+  final String userImageHeroTag;
   final void Function() onProfileImageTap;
 
   @override
@@ -36,19 +39,25 @@ class UserTile extends StatelessWidget {
             color: darkPink,
           ),
         ),
-        leading: GestureDetector(
-          onTap: onProfileImageTap,
-          child: Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            width: MediaQuery.of(context).size.width * 0.11,
-            height: MediaQuery.of(context).size.width * 0.11,
-            decoration: BoxDecoration(
-              color: darkPink.withOpacity(0.2),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
+        leading: Hero(
+          tag: userImageHeroTag,
+          child: Material(
+            type: MaterialType.transparency,
+            child: GestureDetector(
+              onTap: onProfileImageTap,
+              child: Container(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                width: MediaQuery.of(context).size.width * 0.11,
+                height: MediaQuery.of(context).size.width * 0.11,
+                decoration: BoxDecoration(
+                  color: darkPink.withOpacity(0.2),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
+                  ),
+                ),
+                child: userImage,
               ),
             ),
-            child: userImage,
           ),
         ),
         title: Text(

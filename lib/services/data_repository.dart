@@ -8,6 +8,24 @@ class DataRepositroy extends ChangeNotifier {
   final FirebaseFirestore _db;
   DataRepositroy(this._db);
 
+  bool _getFirstisExpense = true;
+
+  bool get getFirstIsExpense => _getFirstisExpense;
+
+  void toggleFirstExpense(bool isExpense) {
+    _getFirstisExpense = isExpense;
+    notifyListeners();
+  }
+
+  int _getFirstCategory = 0;
+
+  int get getFirstCategory => _getFirstCategory;
+
+  void toggleFirstCategory(int category) {
+    _getFirstCategory = category;
+    notifyListeners();
+  }
+
   //index for root widget, 0--> home, 1--> stats
   int _currentIndex = 0;
 

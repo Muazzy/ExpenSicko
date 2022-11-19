@@ -1,7 +1,7 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
-import 'package:expense_tracker_v2/screens/example.dart';
+import 'package:expense_tracker_v2/screens/stats/example.dart';
 import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:expense_tracker_v2/widgets/stats/category_item_customtext.dart';

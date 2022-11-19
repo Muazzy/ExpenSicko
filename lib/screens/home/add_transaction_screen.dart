@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
@@ -113,16 +114,23 @@ class _AddTransactionState extends State<AddTransaction> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  isExpense = !isExpense;
-                  selectedCategory = 0;
-                });
-              },
-              icon: const Icon(
-                Icons.currency_exchange_outlined,
-                color: darkPink,
+            Hero(
+              tag: fabHeroTag,
+              transitionOnUserGestures: true,
+              child: Material(
+                type: MaterialType.transparency,
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isExpense = !isExpense;
+                      selectedCategory = 0;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.currency_exchange_outlined,
+                    color: darkPink,
+                  ),
+                ),
               ),
             )
           ],

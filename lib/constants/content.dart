@@ -32,3 +32,6 @@ const List<String> daysOfTheWeek = [
 
 const String logoutDialogHeading = 'Logging out';
 const String logoutDialogBody = 'Are you sure you want to logout?';
+
+const String userImageHeroTag = 'profilePic';
+const String fabHeroTag = 'FAB';

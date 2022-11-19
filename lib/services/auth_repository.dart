@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/screens/verify_code_screen.dart';
+import 'package:expense_tracker_v2/screens/signup_signin/verify_code_screen.dart';
 import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

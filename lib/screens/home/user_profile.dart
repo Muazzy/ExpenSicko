@@ -1,4 +1,5 @@
 import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/user_profile.dart/profile_header.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class UserProfile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ProfileHeader(
+            userImageHeroTag: userImageHeroTag,
             photoUrl: currentUser.photoURL,
           ),
           Center(
