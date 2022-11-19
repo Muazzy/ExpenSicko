@@ -109,6 +109,9 @@ class HomeScreen extends StatelessWidget {
                                   color: darkPurple,
                                 ),
                                 alignment: Alignment.centerRight,
+                                //TODO add value param here
+
+                                // value: ,
                                 // value: 'hello',
                                 //     // '${context.watch<DataRepositroy>().getFirstIsExpense.toString()} ${context.watch<DataRepositroy>().getFirstCategory}',
 
