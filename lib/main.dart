@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/firebase_options.dart';
 import 'package:expense_tracker_v2/screens/home/user_profile.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
@@ -46,7 +46,7 @@ void main() async {
         debugShowCheckedModeBanner: false,
         title: 'Expense Tracker',
         theme: ThemeData(
-          primarySwatch: materialDarkPurple,
+          primarySwatch: AppColors.materialDarkPurple,
           textTheme: GoogleFonts.interTextTheme(),
         ),
         home: const AuthWrapper(),

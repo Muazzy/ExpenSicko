@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/screens/home/add_transaction_screen.dart';
@@ -18,24 +18,24 @@ class TransactionTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       background: Container(
-        color: darkPurple,
+        color: AppColors.darkPurple,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: const Align(
           alignment: Alignment.centerLeft,
           child: Icon(
             Icons.edit,
-            color: white,
+            color: AppColors.white,
           ),
         ),
       ),
       secondaryBackground: Container(
-        color: darkPink,
+        color: AppColors.darkPink,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: const Align(
           alignment: Alignment.centerRight,
           child: Icon(
             Icons.delete,
-            color: white,
+            color: AppColors.white,
           ),
         ),
       ),

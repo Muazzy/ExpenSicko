@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,7 @@ class UserTile extends StatelessWidget {
           onPressed: onTap,
           icon: const Icon(
             Icons.logout,
-            color: darkPink,
+            color: AppColors.darkPink,
           ),
         ),
         leading: Hero(
@@ -50,7 +50,7 @@ class UserTile extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * 0.11,
                 height: MediaQuery.of(context).size.width * 0.11,
                 decoration: BoxDecoration(
-                  color: darkPink.withOpacity(0.2),
+                  color: AppColors.darkPink.withOpacity(0.2),
                   borderRadius: const BorderRadius.all(
                     Radius.circular(10),
                   ),
@@ -63,14 +63,14 @@ class UserTile extends StatelessWidget {
         title: Text(
           'Welcome back,',
           style: TextStyle(
-            color: bodyTextColor.withOpacity(0.5),
+            color: AppColors.bodyTextColor.withOpacity(0.5),
             fontSize: 12,
           ),
         ),
         subtitle: Text(
           userName, //user name will go here.
           style: const TextStyle(
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileHeader extends StatelessWidget {
@@ -25,7 +25,7 @@ class ProfileHeader extends StatelessWidget {
                 bottomLeft: Radius.circular(36),
                 bottomRight: Radius.circular(36),
               ),
-              color: darkPink,
+              color: AppColors.darkPink,
             ),
           ),
           Container(
@@ -34,7 +34,7 @@ class ProfileHeader extends StatelessWidget {
               borderRadius: BorderRadius.only(
                   bottomLeft: Radius.circular(36),
                   bottomRight: Radius.circular(36)),
-              color: darkPurple,
+              color: AppColors.darkPurple,
             ),
           ),
           Container(
@@ -47,7 +47,7 @@ class ProfileHeader extends StatelessWidget {
                 child: Material(
                   type: MaterialType.transparency,
                   child: CircleAvatar(
-                    backgroundColor: darkPink.withOpacity(0.1),
+                    backgroundColor: AppColors.darkPink.withOpacity(0.1),
                     radius: MediaQuery.of(context).size.width * 0.2 - 8,
                     // backgroundImage: Image.network(
                     //   'https://img.icons8.com/ios-filled/512/who.png',
@@ -67,7 +67,7 @@ class ProfileHeader extends StatelessWidget {
                         icon: Container(
                           padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
-                            color: darkPink,
+                            color: AppColors.darkPink,
                             shape: BoxShape.circle,
                             border: Border.all(
                               width: 2,
@@ -78,7 +78,7 @@ class ProfileHeader extends StatelessWidget {
                             child: Icon(
                               Icons.photo_camera_outlined,
                               size: 18,
-                              color: white,
+                              color: AppColors.white,
                             ),
                           ),
                         ),

@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomToggleButton extends StatelessWidget {
@@ -28,7 +28,7 @@ class CustomToggleButton extends StatelessWidget {
             ? MaterialStateProperty.all(3)
             : MaterialStateProperty.all(0),
         backgroundColor: MaterialStateProperty.all(
-          isExpense ? darkPurple : const Color(0xffF8F8F8),
+          isExpense ? AppColors.darkPurple : const Color(0xffF8F8F8),
           // 0xfffefdff
         ),
         shape: MaterialStateProperty.all(
@@ -51,17 +51,19 @@ class CustomToggleButton extends StatelessWidget {
         overlayColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.pressed)) {
-              return darkPurple.withOpacity(0.2);
+              return AppColors.darkPurple.withOpacity(0.2);
             }
 
-            return darkPurple; //default color
+            return AppColors.darkPurple; //default color
           },
         ),
       ),
       child: Text(
         btnText,
         style: TextStyle(
-          color: isExpense ? white : bodyTextColor.withOpacity(0.5),
+          color: isExpense
+              ? AppColors.white
+              : AppColors.bodyTextColor.withOpacity(0.5),
           fontWeight: FontWeight.bold,
           letterSpacing: 0.8,
         ),

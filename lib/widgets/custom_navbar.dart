@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -12,7 +12,7 @@ class CustomBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(
-        canvasColor: white,
+        canvasColor: AppColors.white,
       ),
       child: BottomAppBar(
         elevation: 0,
@@ -25,7 +25,7 @@ class CustomBottomNavBar extends StatelessWidget {
           iconSize: MediaQuery.of(context).size.width * 0.06,
           onTap: onTap,
           currentIndex: currentIndex,
-          unselectedItemColor: bodyTextColor.withOpacity(0.3),
+          unselectedItemColor: AppColors.bodyTextColor.withOpacity(0.3),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               label: '',
@@ -67,9 +67,9 @@ class RadiantGradientMask extends StatelessWidget {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          darkPurple,
-          darkPurple.withOpacity(0.6),
-          darkPurple.withOpacity(0.1),
+          AppColors.darkPurple,
+          AppColors.darkPurple.withOpacity(0.6),
+          AppColors.darkPurple.withOpacity(0.1),
         ],
         tileMode: TileMode.mirror,
       ).createShader(bounds),

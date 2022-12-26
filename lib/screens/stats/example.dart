@@ -1,5 +1,5 @@
 // import 'package:example/legend_widget.dart';
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
@@ -30,14 +30,14 @@ class BarChartSample6 extends StatelessWidget {
         BarChartRodData(
           fromY: 0,
           toY: expense,
-          color: darkPink,
+          color: AppColors.darkPink,
           width: 8,
         ),
         BarChartRodData(
           fromY: expense + betweenSpace,
           // divided by most highest expense or income & multiplied by 8.
           toY: (expense + betweenSpace + income) / 8 * 8,
-          color: darkPurple,
+          color: AppColors.darkPurple,
           width: 8,
         ),
       ];
@@ -46,7 +46,7 @@ class BarChartSample6 extends StatelessWidget {
       BarChartRodData(
         fromY: 0,
         toY: 8,
-        color: bodyTextColor.withOpacity(0.1),
+        color: AppColors.bodyTextColor.withOpacity(0.1),
         width: 8,
       ),
     ];
@@ -54,7 +54,7 @@ class BarChartSample6 extends StatelessWidget {
 
   Widget bottomTitles(double value, TitleMeta meta) {
     TextStyle style = TextStyle(
-      color: bodyTextColor.withOpacity(0.5),
+      color: AppColors.bodyTextColor.withOpacity(0.5),
       fontSize: 12,
       fontWeight: FontWeight.bold,
     );

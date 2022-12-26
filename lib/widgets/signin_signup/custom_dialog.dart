@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 // import 'package:stich_and_sew/constants/colors.dart';
 
@@ -66,7 +66,7 @@ class CustomDialog extends StatelessWidget {
                   child: Material(
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(11)),
-                      side: BorderSide(color: darkPurple, width: 2),
+                      side: BorderSide(color: AppColors.darkPurple, width: 2),
                     ),
                     child: InkWell(
                       onTap: () {
@@ -80,7 +80,7 @@ class CustomDialog extends StatelessWidget {
                           style: Theme.of(context)
                               .textTheme
                               .bodyLarge
-                              ?.copyWith(color: darkPurple),
+                              ?.copyWith(color: AppColors.darkPurple),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -92,7 +92,7 @@ class CustomDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: Material(
-                    color: darkPurple,
+                    color: AppColors.darkPurple,
                     borderRadius: const BorderRadius.all(Radius.circular(11)),
                     child: InkWell(
                       onTap: actionFunction,
