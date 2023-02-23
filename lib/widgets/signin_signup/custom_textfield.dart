@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -38,7 +38,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
         Radius.circular(10),
       ),
       elevation: 1.5,
-      shadowColor: bodyTextColor.withOpacity(0.8),
+      shadowColor: AppColors.bodyTextColor.withOpacity(0.8),
       child: TextFormField(
         controller: widget.textEditingController,
         obscureText: widget.isPassword,

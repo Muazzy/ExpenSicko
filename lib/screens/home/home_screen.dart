@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/constants/image_paths.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
@@ -34,11 +34,11 @@ class HomeScreen extends StatelessWidget {
         stream: context.read<DataRepositroy>().transactionStream,
         builder: (context, snapshot) {
           List<AppTransaction> transactions = snapshot.data ?? [];
-          transactions = filter(
-            context.watch<DataRepositroy>().getFirstIsExpense,
-            transactions,
-            context.watch<DataRepositroy>().getFirstCategory,
-          );
+          // transactions = filter(
+          //   context.watch<DataRepositroy>().getFirstIsExpense,
+          //   transactions,
+          //   context.watch<DataRepositroy>().getFirstCategory,
+          // );
           if (snapshot.hasData) {
             return SafeArea(
               child: Column(
@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                           )
                         : Transform.scale(
                             scale: 1.5,
-                            child: SvgPicture.asset(defaultUserImg),
+                            child: Image.asset(defaultUserImg),
                           ),
                     userName: userName ?? 'User',
                   ),
@@ -98,7 +98,7 @@ class HomeScreen extends StatelessWidget {
                               Text(
                                 'Recent transactions',
                                 style: TextStyle(
-                                  color: bodyTextColor,
+                                  color: AppColors.bodyTextColor,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -106,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                               DropdownButton<String>(
                                 icon: Icon(
                                   Icons.arrow_drop_down,
-                                  color: darkPurple,
+                                  color: AppColors.darkPurple,
                                 ),
                                 alignment: Alignment.centerRight,
                                 //TODO add value param here
@@ -210,7 +210,7 @@ class HomeScreen extends StatelessWidget {
                               'Click on the ➕ button to add a transaction.\n',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: darkPink.withOpacity(0.5),
+                                color: AppColors.darkPink.withOpacity(0.5),
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 1.2,
                                 fontSize: 12,
@@ -254,8 +254,8 @@ class CustomDropDownMenuItem extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: isExpense
-                ? darkPink.withOpacity(0.2)
-                : darkPurple.withOpacity(0.2),
+                ? AppColors.darkPink.withOpacity(0.2)
+                : AppColors.darkPurple.withOpacity(0.2),
             shape: BoxShape.circle,
           ),
           child: Padding(
@@ -264,7 +264,7 @@ class CustomDropDownMenuItem extends StatelessWidget {
             ),
             child: Icon(
               catIcon,
-              color: isExpense ? darkPurple : darkPink,
+              color: isExpense ? AppColors.darkPurple : AppColors.darkPink,
               size: 16,
             ),
           ),
@@ -273,7 +273,7 @@ class CustomDropDownMenuItem extends StatelessWidget {
         Text(
           catString,
           style: TextStyle(
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
             fontSize: 10,
             fontWeight: FontWeight.bold,
           ),

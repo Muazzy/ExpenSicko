@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +37,10 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
               const Text(
                 "Phone Verification",
                 style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: bodyTextColor),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.bodyTextColor,
+                ),
               ),
               const SizedBox(height: 10),
               const Text(
@@ -47,7 +48,7 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
                 style: TextStyle(
                   fontSize: 16,
                   height: 1.3,
-                  color: bodyTextColor,
+                  color: AppColors.bodyTextColor,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -68,7 +69,7 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
                 flagsButtonPadding: const EdgeInsets.symmetric(horizontal: 4),
                 showDropdownIcon: false,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                cursorColor: darkPurple,
+                cursorColor: AppColors.darkPurple,
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.symmetric(horizontal: 1),
                   border: OutlineInputBorder(
@@ -79,7 +80,7 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: darkPurple,
+                      color: AppColors.darkPurple,
                     ),
                     borderRadius: BorderRadius.all(
                       Radius.circular(10),
@@ -103,8 +104,8 @@ class _SignInWithNumberState extends State<SignInWithNumber> {
               SignInAndGetStartedButton(
                 isLoading: isLoading,
                 buttonText: 'Send the code',
-                buttonBgColor: darkPurple,
-                buttonFontColor: white,
+                buttonBgColor: AppColors.darkPurple,
+                buttonFontColor: AppColors.white,
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     FocusScope.of(context).unfocus();

@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:flutter/material.dart';
 
@@ -14,13 +14,13 @@ class CustomFAB extends StatelessWidget {
     return FloatingActionButton(
       heroTag: fabHeroTag,
       elevation: 0,
-      backgroundColor: darkPurple,
+      backgroundColor: AppColors.darkPurple,
       clipBehavior: Clip.hardEdge,
       // isExtended: t,
       onPressed: onPressed,
       child: Icon(
         Icons.add_rounded,
-        color: white,
+        color: AppColors.white,
         size: MediaQuery.of(context).size.width * 0.1,
       ),
     );

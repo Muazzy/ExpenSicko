@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class VerifyCode extends StatelessWidget {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: bodyTextColor,
+                color: AppColors.bodyTextColor,
               ),
             ),
             const SizedBox(height: 10),
@@ -47,7 +47,7 @@ class VerifyCode extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 14,
                 height: 1.5,
-                color: bodyTextColor,
+                color: AppColors.bodyTextColor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -61,7 +61,7 @@ class VerifyCode extends StatelessWidget {
                 errorPinTheme: errorPinTheme,
                 errorText: 'Incorrect Pin',
                 errorTextStyle: const TextStyle(
-                  color: darkPink,
+                  color: AppColors.darkPink,
                 ),
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
@@ -75,8 +75,8 @@ class VerifyCode extends StatelessWidget {
             SignInAndGetStartedButton(
               isLoading: isLoading,
               buttonText: 'Verify code',
-              buttonBgColor: darkPurple,
-              buttonFontColor: white,
+              buttonBgColor: AppColors.darkPurple,
+              buttonFontColor: AppColors.white,
               onPressed: onPressed,
               fullWidth: true,
             ),
@@ -93,7 +93,7 @@ PinTheme errorPinTheme = PinTheme(
   height: 55,
   decoration: BoxDecoration(
     border: Border.all(
-      color: darkPink,
+      color: AppColors.darkPink,
       width: 2,
     ),
     borderRadius: const BorderRadius.all(
@@ -101,7 +101,7 @@ PinTheme errorPinTheme = PinTheme(
     ),
   ),
   textStyle: const TextStyle(
-    color: darkPink,
+    color: AppColors.darkPink,
     fontSize: 18.0,
     fontWeight: FontWeight.w600,
   ),
@@ -112,7 +112,7 @@ PinTheme defaultPinTheme = PinTheme(
   height: 55,
   decoration: BoxDecoration(
     border: Border.all(
-      color: darkPurple.withOpacity(0.5),
+      color: AppColors.darkPurple.withOpacity(0.5),
       width: 1,
     ),
     borderRadius: const BorderRadius.all(
@@ -120,7 +120,7 @@ PinTheme defaultPinTheme = PinTheme(
     ),
   ),
   textStyle: const TextStyle(
-    color: darkPurple,
+    color: AppColors.darkPurple,
     fontSize: 18.0,
     fontWeight: FontWeight.w600,
   ),
@@ -131,7 +131,7 @@ PinTheme focusPinTheme = PinTheme(
   height: 55,
   decoration: BoxDecoration(
     border: Border.all(
-      color: darkPurple,
+      color: AppColors.darkPurple,
       width: 2,
     ),
     borderRadius: const BorderRadius.all(
@@ -139,7 +139,7 @@ PinTheme focusPinTheme = PinTheme(
     ),
   ),
   textStyle: const TextStyle(
-    color: darkPurple,
+    color: AppColors.darkPurple,
     fontSize: 18.0,
     fontWeight: FontWeight.w600,
   ),
