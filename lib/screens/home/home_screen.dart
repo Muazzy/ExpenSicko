@@ -34,11 +34,11 @@ class HomeScreen extends StatelessWidget {
         stream: context.read<DataRepositroy>().transactionStream,
         builder: (context, snapshot) {
           List<AppTransaction> transactions = snapshot.data ?? [];
-          transactions = filter(
-            context.watch<DataRepositroy>().getFirstIsExpense,
-            transactions,
-            context.watch<DataRepositroy>().getFirstCategory,
-          );
+          // transactions = filter(
+          //   context.watch<DataRepositroy>().getFirstIsExpense,
+          //   transactions,
+          //   context.watch<DataRepositroy>().getFirstCategory,
+          // );
           if (snapshot.hasData) {
             return SafeArea(
               child: Column(
@@ -69,7 +69,7 @@ class HomeScreen extends StatelessWidget {
                           )
                         : Transform.scale(
                             scale: 1.5,
-                            child: SvgPicture.asset(defaultUserImg),
+                            child: Image.asset(defaultUserImg),
                           ),
                     userName: userName ?? 'User',
                   ),
