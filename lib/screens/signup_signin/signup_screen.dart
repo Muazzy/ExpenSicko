@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
@@ -28,7 +28,7 @@ class SignUpScreen extends StatelessWidget {
         title: const Text(
           'Sign Up',
           style: TextStyle(
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -42,7 +42,7 @@ class SignUpScreen extends StatelessWidget {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
           ),
         ),
       ),
@@ -62,31 +62,31 @@ class SignUpScreen extends StatelessWidget {
                       textEditingController: nameController,
                       labelText: 'Name',
                       isPassword: false,
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
+                      primaryColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     CustomFormField(
                       labelText: 'Email',
                       isPassword: false,
                       textEditingController: emailController,
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
+                      primaryColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     CustomFormField(
                       labelText: 'Password',
                       isPassword: true,
                       textEditingController: passwordController,
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
+                      primaryColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     SignInAndGetStartedButton(
                       isLoading: isLoading,
                       fullWidth: true,
                       buttonText: 'Sign Up',
-                      buttonBgColor: darkPurple,
+                      buttonBgColor: AppColors.darkPurple,
                       buttonFontColor: Colors.white,
                       onPressed: () {
                         context.read<AuthRepository>().signUpWithEmail(
@@ -103,7 +103,7 @@ class SignUpScreen extends StatelessWidget {
                         'or with',
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: bodyTextColor.withOpacity(0.7),
+                          color: AppColors.bodyTextColor.withOpacity(0.7),
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -113,14 +113,14 @@ class SignUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SocialButton(
-                          iconColor: darkPurple,
+                          iconColor: AppColors.darkPurple,
                           buttonIcon: FontAwesomeIcons.phone,
                           onPressed: () {
                             Navigator.pushNamed(context, '/numberSignIn');
                           },
                         ),
                         SocialButton(
-                          iconColor: darkPink,
+                          iconColor: AppColors.darkPink,
                           buttonIcon: FontAwesomeIcons.google,
                           onPressed: () {
                             context
@@ -137,8 +137,8 @@ class SignUpScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.pop(context);
                       },
-                      btnColor: darkPurple,
-                      textColor: bodyTextColor,
+                      btnColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                   ],
                 ),

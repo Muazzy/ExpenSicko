@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
@@ -81,7 +81,7 @@ class _AddTransactionState extends State<AddTransaction> {
     }
 
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: AppColors.white,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -91,7 +91,7 @@ class _AddTransactionState extends State<AddTransaction> {
           },
           icon: const Icon(
             Icons.arrow_back,
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
           ),
         ),
         title: Row(
@@ -103,14 +103,14 @@ class _AddTransactionState extends State<AddTransaction> {
                 ? const Text(
                     'Expense',
                     style: TextStyle(
-                      color: bodyTextColor,
+                      color: AppColors.bodyTextColor,
                       fontWeight: FontWeight.bold,
                     ),
                   )
                 : const Text(
                     'Income',
                     style: TextStyle(
-                      color: bodyTextColor,
+                      color: AppColors.bodyTextColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -128,7 +128,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   },
                   icon: const Icon(
                     Icons.currency_exchange_outlined,
-                    color: darkPink,
+                    color: AppColors.darkPink,
                   ),
                 ),
               ),
@@ -181,7 +181,8 @@ class _AddTransactionState extends State<AddTransaction> {
                     },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(3),
-                backgroundColor: MaterialStateProperty.all(darkPurple),
+                backgroundColor:
+                    MaterialStateProperty.all(AppColors.darkPurple),
                 shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10)),
@@ -195,7 +196,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   ? const Text(
                       'Update',
                       style: TextStyle(
-                        color: white,
+                        color: AppColors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.8,
                       ),
@@ -203,7 +204,7 @@ class _AddTransactionState extends State<AddTransaction> {
                   : const Text(
                       'Save',
                       style: TextStyle(
-                        color: white,
+                        color: AppColors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.8,
                       ),
@@ -239,8 +240,8 @@ class _AddTransactionState extends State<AddTransaction> {
                       child: Container(
                         decoration: BoxDecoration(
                           color: selectedCategory == index
-                              ? darkPurple.withOpacity(0.3)
-                              : white,
+                              ? AppColors.darkPurple.withOpacity(0.3)
+                              : AppColors.white,
                           borderRadius: const BorderRadius.all(
                             Radius.circular(16),
                           ),
@@ -255,7 +256,7 @@ class _AddTransactionState extends State<AddTransaction> {
                                   isExpense,
                                   isExpense ? expenses[index] : incomes[index],
                                 ),
-                                color: darkPurple,
+                                color: AppColors.darkPurple,
                               ),
                               Text(
                                 AppTransaction.staticGetCategoryString(
@@ -265,7 +266,7 @@ class _AddTransactionState extends State<AddTransaction> {
                                 // maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  color: darkPurple,
+                                  color: AppColors.darkPurple,
                                   fontSize: 12,
                                   fontWeight: selectedCategory == index
                                       ? FontWeight.bold
@@ -308,14 +309,14 @@ class _AddTransactionState extends State<AddTransaction> {
                         : formatDate(selectedDate),
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: darkPurple,
+                      color: AppColors.darkPurple,
                     ),
                   ),
                   IconButton(
                     onPressed: () => selectDate(context),
                     icon: const Icon(
                       Icons.calendar_month,
-                      color: darkPink,
+                      color: AppColors.darkPink,
                     ),
                   ),
                 ],
@@ -326,8 +327,8 @@ class _AddTransactionState extends State<AddTransaction> {
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
-                    darkPurple.withOpacity(0.8),
-                    darkPurple,
+                    AppColors.darkPurple.withOpacity(0.8),
+                    AppColors.darkPurple,
                   ]),
                 ),
                 child: Padding(
@@ -344,12 +345,12 @@ class _AddTransactionState extends State<AddTransaction> {
                           // initialValue: 'untitled',
                           style: TextStyle(
                             // fontWeight: FontWeight.bold,
-                            color: white.withOpacity(0.8),
+                            color: AppColors.white.withOpacity(0.8),
                             fontSize: 16,
                           ),
                           decoration: InputDecoration(
                             hintStyle: TextStyle(
-                              color: white.withOpacity(0.6),
+                              color: AppColors.white.withOpacity(0.6),
                             ),
                             // contentPadding: EdgeInsets.symmetric(),
                             icon: Icon(
@@ -359,7 +360,7 @@ class _AddTransactionState extends State<AddTransaction> {
                                     ? expenses[selectedCategory]
                                     : incomes[selectedCategory],
                               ),
-                              color: white,
+                              color: AppColors.white,
                             ),
                             border: InputBorder.none,
                             hintText: 'Name',
@@ -374,7 +375,7 @@ class _AddTransactionState extends State<AddTransaction> {
                           },
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: white,
+                            color: AppColors.white,
                             fontSize: 24,
                           ),
                           keyboardType: TextInputType.number,
@@ -382,7 +383,7 @@ class _AddTransactionState extends State<AddTransaction> {
                           decoration: InputDecoration(
                             hintStyle: TextStyle(
                               fontSize: 16,
-                              color: white.withOpacity(0.6),
+                              color: AppColors.white.withOpacity(0.6),
                             ),
                             border: InputBorder.none,
                             hintText: 'Amount',

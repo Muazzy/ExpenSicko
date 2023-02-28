@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/screens/stats/example.dart';
@@ -73,8 +73,8 @@ class StatScreen extends StatelessWidget {
                                       : [
                                           PieChartSectionData(
                                             showTitle: false,
-                                            color:
-                                                bodyTextColor.withOpacity(0.2),
+                                            color: AppColors.bodyTextColor
+                                                .withOpacity(0.2),
                                             radius: 24.0,
                                             value: 69,
                                           ),
@@ -104,8 +104,8 @@ class StatScreen extends StatelessWidget {
                                 : [
                                     CategoryItem(
                                       categoryName: 'No Entries',
-                                      categoryColor:
-                                          bodyTextColor.withOpacity(0.2),
+                                      categoryColor: AppColors.bodyTextColor
+                                          .withOpacity(0.2),
                                       borderWidth: 3,
                                     )
                                   ],
@@ -124,7 +124,7 @@ class StatScreen extends StatelessWidget {
                       const Text(
                         'This Week',
                         style: TextStyle(
-                          color: bodyTextColor,
+                          color: AppColors.bodyTextColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 24,
                         ),
@@ -138,7 +138,7 @@ class StatScreen extends StatelessWidget {
                           )}', //this will be handled dynamically.
                           // '',
                           style: TextStyle(
-                            color: bodyTextColor.withOpacity(0.5),
+                            color: AppColors.bodyTextColor.withOpacity(0.5),
                             // fontWeight: FontWeight.bold,
                             fontSize: 12,
                           ),
@@ -157,17 +157,17 @@ class StatScreen extends StatelessWidget {
                     children: [
                       const CategoryItem(
                         categoryName: 'Income',
-                        categoryColor: darkPurple,
+                        categoryColor: AppColors.darkPurple,
                         borderWidth: 8,
                       ),
                       const CategoryItem(
                         categoryName: 'Expense',
-                        categoryColor: darkPink,
+                        categoryColor: AppColors.darkPink,
                         borderWidth: 8,
                       ),
                       CategoryItem(
                         categoryName: 'Not yet',
-                        categoryColor: bodyTextColor.withOpacity(0.3),
+                        categoryColor: AppColors.bodyTextColor.withOpacity(0.3),
                         borderWidth: 8,
                       ),
                     ],

@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/user_profile.dart/profile_header.dart';
@@ -32,11 +32,12 @@ class UserProfile extends StatelessWidget {
                   Icon(
                     FontAwesomeIcons.penToSquare,
                     size: 18,
-                    color: bodyTextColor,
+                    color: AppColors.bodyTextColor,
                   ),
                   Text(
                     ' Edit',
-                    style: TextStyle(color: bodyTextColor, fontSize: 16),
+                    style:
+                        TextStyle(color: AppColors.bodyTextColor, fontSize: 16),
                   ),
                 ],
               ),
@@ -51,7 +52,7 @@ class UserProfile extends StatelessWidget {
                 const Text(
                   'Personal Details',
                   style: TextStyle(
-                    color: darkPurple,
+                    color: AppColors.darkPurple,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
@@ -63,7 +64,7 @@ class UserProfile extends StatelessWidget {
                     const Text(
                       'Name:',
                       style: TextStyle(
-                        color: bodyTextColor,
+                        color: AppColors.bodyTextColor,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -72,7 +73,7 @@ class UserProfile extends StatelessWidget {
                     Text(
                       currentUser.displayName ?? ' ',
                       style: const TextStyle(
-                        color: bodyTextColor,
+                        color: AppColors.bodyTextColor,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),

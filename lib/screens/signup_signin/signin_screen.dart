@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
@@ -30,7 +30,7 @@ class _SignInScreenState extends State<SignInScreen> {
         title: const Text(
           'Sign In',
           style: TextStyle(
-            color: bodyTextColor,
+            color: AppColors.bodyTextColor,
             fontSize: 20,
             fontWeight: FontWeight.w500,
           ),
@@ -55,23 +55,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       labelText: 'Email',
                       isPassword: false,
                       textEditingController: emailController,
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
+                      primaryColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     CustomFormField(
                       labelText: 'Password',
                       isPassword: true,
                       textEditingController: passwordController,
-                      primaryColor: darkPurple,
-                      textColor: bodyTextColor,
+                      primaryColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                     const SizedBox(height: 24),
                     SignInAndGetStartedButton(
                       buttonText: 'Sign in',
                       isLoading: isLoading,
                       fullWidth: true,
-                      buttonBgColor: darkPurple,
+                      buttonBgColor: AppColors.darkPurple,
                       buttonFontColor: Colors.white,
                       onPressed: () async {
                         context.read<AuthRepository>().loginWithEmail(
@@ -87,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         'or with',
                         style: TextStyle(
                           fontSize: 16.0,
-                          color: bodyTextColor.withOpacity(0.7),
+                          color: AppColors.bodyTextColor.withOpacity(0.7),
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -97,14 +97,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SocialButton(
-                          iconColor: darkPurple,
+                          iconColor: AppColors.darkPurple,
                           buttonIcon: FontAwesomeIcons.phone,
                           onPressed: () {
                             Navigator.pushNamed(context, '/numberSignIn');
                           },
                         ),
                         SocialButton(
-                          iconColor: darkPink,
+                          iconColor: AppColors.darkPink,
                           buttonIcon: FontAwesomeIcons.google,
                           onPressed: () {
                             context
@@ -121,8 +121,8 @@ class _SignInScreenState extends State<SignInScreen> {
                       onPressed: () {
                         Navigator.pushNamed(context, '/signUp');
                       },
-                      btnColor: darkPurple,
-                      textColor: bodyTextColor,
+                      btnColor: AppColors.darkPurple,
+                      textColor: AppColors.bodyTextColor,
                     ),
                   ],
                 ),

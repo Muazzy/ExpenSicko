@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:flutter/material.dart';
 
 final TextStyle kExpenseBodyTextStyle = TextStyle(
@@ -14,7 +14,7 @@ final TextStyle kExpenseBodyTextStyle = TextStyle(
 );
 
 const TextStyle kExpenseHeadingTextStyle = TextStyle(
-  color: darkPurple,
+  color: AppColors.darkPurple,
   fontWeight: FontWeight.w600,
   shadows: [
     Shadow(
@@ -27,12 +27,12 @@ const TextStyle kExpenseHeadingTextStyle = TextStyle(
 );
 
 const TextStyle kTitleTextStyle = TextStyle(
-  color: bodyTextColor,
+  color: AppColors.bodyTextColor,
   fontWeight: FontWeight.bold,
   fontSize: 14,
 );
 
 final TextStyle kSubtitleTextStyle = TextStyle(
-  color: bodyTextColor.withOpacity(0.4),
+  color: AppColors.bodyTextColor.withOpacity(0.4),
   fontSize: 11,
 );

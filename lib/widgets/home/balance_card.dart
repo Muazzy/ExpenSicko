@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/textstyles.dart';
 import 'package:flutter/material.dart';
 
@@ -27,10 +27,10 @@ class BalanceCard extends StatelessWidget {
             end: const Alignment(-0.8, -0.8),
             stops: [0.0, 0.5, 0.5, 1],
             colors: [
-              darkPurple.withOpacity(1),
-              darkPurple.withOpacity(1),
-              darkPurple.withOpacity(0.8),
-              darkPurple.withOpacity(0.95),
+              AppColors.darkPurple.withOpacity(1),
+              AppColors.darkPurple.withOpacity(1),
+              AppColors.darkPurple.withOpacity(0.8),
+              AppColors.darkPurple.withOpacity(0.95),
             ],
             tileMode: TileMode.repeated,
           ),
@@ -79,7 +79,7 @@ class BalanceCard extends StatelessWidget {
                     const TextSpan(
                       text: 'PKR',
                       style: TextStyle(
-                        color: darkPink,
+                        color: AppColors.darkPink,
                         fontSize: 8,
                         fontWeight: FontWeight.w900,
                         shadows: [
@@ -107,10 +107,10 @@ class BalanceCard extends StatelessWidget {
                       end: const Alignment(0.8, 0.15),
                       stops: [0.0, 0.5, 0.5, 1],
                       colors: [
-                        darkPurple.withOpacity(0.5),
-                        darkPurple.withOpacity(0.5),
-                        darkPurple.withOpacity(0.3),
-                        darkPurple.withOpacity(0.45),
+                        AppColors.darkPurple.withOpacity(0.5),
+                        AppColors.darkPurple.withOpacity(0.5),
+                        AppColors.darkPurple.withOpacity(0.3),
+                        AppColors.darkPurple.withOpacity(0.45),
                       ],
                       tileMode: TileMode.repeated,
                     ),

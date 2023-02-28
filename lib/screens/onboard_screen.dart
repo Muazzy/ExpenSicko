@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/colors.dart';
+import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:expense_tracker_v2/constants/image_paths.dart';
 import 'package:expense_tracker_v2/model/onboard_page_model.dart';
@@ -39,7 +39,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: AppColors.white,
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.only(
@@ -65,7 +65,7 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                       image: pages[index].image,
                       heading: pages[index].heading,
                       bodyText: pages[index].bodyText,
-                      textColor: bodyTextColor,
+                      textColor: AppColors.bodyTextColor,
                     );
                   },
                 ),
@@ -78,8 +78,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   children: List.generate(
                     pages.length,
                     (index) => DotIndicator(
-                      activeColor: darkPurple,
-                      notActiveColor: accentColor,
+                      activeColor: AppColors.darkPurple,
+                      notActiveColor: AppColors.accentColor,
                       index: index,
                       currentIndex: currentPage,
                     ),
@@ -93,8 +93,8 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
                   horizontal: MediaQuery.of(context).size.width * 0.085,
                 ),
                 child: SignInAndGetStartedButton(
-                  buttonBgColor: darkPurple,
-                  buttonFontColor: white,
+                  buttonBgColor: AppColors.darkPurple,
+                  buttonFontColor: AppColors.white,
                   buttonText: 'Get Started',
                   fullWidth: true,
                   onPressed: () {
