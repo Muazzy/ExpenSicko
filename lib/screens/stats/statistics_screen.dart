@@ -16,17 +16,19 @@ class StatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
-    bool isExpense = context.watch<DataRepositroy>().getIsExpense;
+    bool isExpense = context.watch<DataRepository>().getIsExpense;
     final List<DateTime> thisWeek = getThisWeek();
 
     return StreamBuilder<List<AppTransaction>>(
-      stream: context.read<DataRepositroy>().transactionStream,
+      stream: context.read<DataRepository>().transactionStream,
       builder: (context, snapshot) {
         final transactions = snapshot.data ?? [];
         final Map<String, dynamic> pieChartData =
             getPieChartData(isExpense, transactions);
-        final Map<int, dynamic> barChartData = getBarChartData(transactions);
-
+        final Map<int, double> barChartData =
+            getBarChartModifiedData(transactions, isExpense);
+        // print('bar Chart Data: $barChartData');
+        // print(getBarChartModifiedData(barChartData, isExpense));
         if (snapshot.hasData) {
           return SafeArea(
             child: Column(
@@ -34,7 +36,7 @@ class StatScreen extends StatelessWidget {
               children: [
                 CustomSwitch(
                   onPressed: () {
-                    context.read<DataRepositroy>().toggleExpense();
+                    context.read<DataRepository>().toggleExpense();
                   },
                   isExpense: isExpense,
                   width: width,
@@ -147,9 +149,10 @@ class StatScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                //TODO: bar chart dyanamically
-                //make this dynamical tommorow.
-                BarChartSample6(expenseAndIncomes: barChartData),
+                BarChartWidget(
+                  isExpense: isExpense,
+                  transactions: barChartData,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: Row(

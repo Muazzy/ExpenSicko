@@ -163,7 +163,7 @@ class _AddTransactionState extends State<AddTransaction> {
                     }
                   : () {
                       context
-                          .read<DataRepositroy>()
+                          .read<DataRepository>()
                           .addTransaction(
                             transactionNameController.text.isEmpty
                                 ? 'untitled'

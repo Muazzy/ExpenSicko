@@ -30,9 +30,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<DataRepositroy>(
+        ChangeNotifierProvider<DataRepository>(
           lazy: false,
-          create: (context) => DataRepositroy(FirebaseFirestore.instance),
+          create: (context) => DataRepository(FirebaseFirestore.instance),
         ),
         ChangeNotifierProvider<AuthRepository>(
           create: (context) => AuthRepository(FirebaseAuth.instance),
