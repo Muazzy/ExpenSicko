@@ -23,14 +23,14 @@ class _RootScreenState extends State<RootScreen> {
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex = Provider.of<DataRepositroy>(context).getCurrentIndex;
+    int currentIndex = Provider.of<DataRepository>(context).getCurrentIndex;
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: currentIndex,
         onTap: (index) {
-          Provider.of<DataRepositroy>(context, listen: false).currentIndex =
+          Provider.of<DataRepository>(context, listen: false).currentIndex =
               index;
         },
       ),
