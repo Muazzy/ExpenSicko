@@ -4,9 +4,9 @@ import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
 import 'package:flutter/widgets.dart';
 
-class DataRepositroy extends ChangeNotifier {
+class DataRepository extends ChangeNotifier {
   final FirebaseFirestore _db;
-  DataRepositroy(this._db);
+  DataRepository(this._db);
 
   bool _getFirstisExpense = true;
 

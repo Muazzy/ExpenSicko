@@ -24,20 +24,21 @@ class HomeScreen extends StatelessWidget {
     final currentFirebaseUser = context.read<AuthRepository>().user;
     final userName = currentFirebaseUser.displayName;
 
-    const expensesEnums = ExpenseCategory.values;
-    const incomeEnums = IncomeCategory.values;
+    // const expensesEnums = ExpenseCategory.values;
+    // const incomeEnums = IncomeCategory.values;
 
-    String val =
-        '${context.watch<DataRepositroy>().getFirstIsExpense.toString()} ${context.watch<DataRepositroy>().getFirstCategory}';
+    // List<String> items = ['-1 true'];
+    // String val =
+    //     '${context.watch<DataRepository>().getFirstIsExpense.toString()} ${context.watch<DataRepository>().getFirstCategory}';
 
     return StreamBuilder<List<AppTransaction>>(
-        stream: context.read<DataRepositroy>().transactionStream,
+        stream: context.read<DataRepository>().transactionStream,
         builder: (context, snapshot) {
           List<AppTransaction> transactions = snapshot.data ?? [];
           // transactions = filter(
-          //   context.watch<DataRepositroy>().getFirstIsExpense,
+          //   context.watch<DataRepository>().getFirstIsExpense,
           //   transactions,
-          //   context.watch<DataRepositroy>().getFirstCategory,
+          //   context.watch<DataRepository>().getFirstCategory,
           // );
           if (snapshot.hasData) {
             return SafeArea(
@@ -103,86 +104,86 @@ class HomeScreen extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              DropdownButton<String>(
-                                icon: Icon(
-                                  Icons.arrow_drop_down,
-                                  color: AppColors.darkPurple,
-                                ),
-                                alignment: Alignment.centerRight,
-                                //TODO add value param here
-                                // value: ,
-                                // value: 'hello',
-                                //     // '${context.watch<DataRepositroy>().getFirstIsExpense.toString()} ${context.watch<DataRepositroy>().getFirstCategory}',
+                              // DropdownButton<String>(
+                              //   icon: Icon(
+                              //     Icons.arrow_drop_down,
+                              //     color: AppColors.darkPurple,
+                              //   ),
+                              //   alignment: Alignment.centerRight,
+                              //   //TODO add value param here
+                              //   // value: ,
+                              //   // value: 'hello',
+                              //   //     // '${context.watch<DataRepositroy>().getFirstIsExpense.toString()} ${context.watch<DataRepositroy>().getFirstCategory}',
+                              //   value: ,
+                              //   items: [
+                              //         DropdownMenuItem<String>(
+                              //           value: '-1 true',
+                              //           child: Text('All'),
+                              //         )
+                              //       ] +
+                              //       expensesEnums
+                              //           .map((e) => DropdownMenuItem<String>(
+                              //                 value: '${e.index} true',
+                              //                 child: CustomDropDownMenuItem(
+                              //                   isExpense: true,
+                              //                   catIcon: AppTransaction
+                              //                       .staticGetcategoryIcon(
+                              //                     true,
+                              //                     expensesEnums[e.index],
+                              //                   ),
+                              //                   catString: AppTransaction
+                              //                       .staticGetCategoryString(
+                              //                     true,
+                              //                     expensesEnums[e.index],
+                              //                   ),
+                              //                 ),
+                              //               ))
+                              //           .toList() +
+                              //       incomeEnums
+                              //           .map(
+                              //             (e) => DropdownMenuItem<String>(
+                              //               value: '${e.index} false',
+                              //               child: CustomDropDownMenuItem(
+                              //                 isExpense: false,
+                              //                 catIcon: AppTransaction
+                              //                     .staticGetcategoryIcon(
+                              //                   false,
+                              //                   incomeEnums[e.index],
+                              //                 ),
+                              //                 catString: AppTransaction
+                              //                     .staticGetCategoryString(
+                              //                   false,
+                              //                   incomeEnums[e.index],
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           )
+                              //           .toList(),
+                              //   onChanged: (value) {
+                              //     var exp = value!.split(' ')[1];
+                              //     var cat = value.split(' ')[0];
 
-                                items: [
-                                      DropdownMenuItem<String>(
-                                        value: '-1 true',
-                                        child: Text('All'),
-                                      )
-                                    ] +
-                                    expensesEnums
-                                        .map((e) => DropdownMenuItem<String>(
-                                              value: '${e.index} true',
-                                              child: CustomDropDownMenuItem(
-                                                isExpense: true,
-                                                catIcon: AppTransaction
-                                                    .staticGetcategoryIcon(
-                                                  true,
-                                                  expensesEnums[e.index],
-                                                ),
-                                                catString: AppTransaction
-                                                    .staticGetCategoryString(
-                                                  true,
-                                                  expensesEnums[e.index],
-                                                ),
-                                              ),
-                                            ))
-                                        .toList() +
-                                    incomeEnums
-                                        .map(
-                                          (e) => DropdownMenuItem<String>(
-                                            value: '${e.index} false',
-                                            child: CustomDropDownMenuItem(
-                                              isExpense: false,
-                                              catIcon: AppTransaction
-                                                  .staticGetcategoryIcon(
-                                                false,
-                                                incomeEnums[e.index],
-                                              ),
-                                              catString: AppTransaction
-                                                  .staticGetCategoryString(
-                                                false,
-                                                incomeEnums[e.index],
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        .toList(),
-                                onChanged: (value) {
-                                  var exp = value!.split(' ')[1];
-                                  var cat = value.split(' ')[0];
-
-                                  bool isExpense;
-                                  if (exp == 'true') {
-                                    isExpense = true;
-                                  } else {
-                                    isExpense = false;
-                                  }
-                                  context
-                                      .read<DataRepositroy>()
-                                      .toggleFirstExpense(isExpense);
-                                  print(context
-                                      .read<DataRepositroy>()
-                                      .getFirstIsExpense);
-                                  context
-                                      .read<DataRepositroy>()
-                                      .toggleFirstCategory(int.parse(cat));
-                                  print(context
-                                      .read<DataRepositroy>()
-                                      .getFirstCategory);
-                                },
-                                underline: SizedBox.shrink(),
-                              ),
+                              //     bool isExpense;
+                              //     if (exp == 'true') {
+                              //       isExpense = true;
+                              //     } else {
+                              //       isExpense = false;
+                              //     }
+                              //     context
+                              //         .read<DataRepository>()
+                              //         .toggleFirstExpense(isExpense);
+                              //     print(context
+                              //         .read<DataRepository>()
+                              //         .getFirstIsExpense);
+                              //     context
+                              //         .read<DataRepository>()
+                              //         .toggleFirstCategory(int.parse(cat));
+                              //     print(context
+                              //         .read<DataRepository>()
+                              //         .getFirstCategory);
+                              //   },
+                              //   underline: SizedBox.shrink(),
+                              // ),
                             ],
                           ),
                         )

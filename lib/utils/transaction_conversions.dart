@@ -40,7 +40,36 @@ getPieChartData(bool isExpense, List<AppTransaction> transactions) {
 final thisWeek = getThisWeek();
 
 Map<int, dynamic> getBarChartData(List<AppTransaction> transactions) {
-  Map<int, dynamic> barChartData = {};
+  Map<int, dynamic> barChartData = {
+    0: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    1: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    2: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    3: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    4: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    5: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+    6: {
+      'totalIncome': 0.0,
+      'totalExpense': 0.0,
+    },
+  };
 
   for (int i = 0; i < thisWeek.length; i++) {
     for (var transactionItem in transactions) {
@@ -76,4 +105,14 @@ Map<int, dynamic> getBarChartData(List<AppTransaction> transactions) {
     }
   }
   return barChartData;
+}
+
+Map<int, double> getBarChartModifiedData(
+  // Map<int, dynamic> transactions,
+  List<AppTransaction> transactions,
+  bool isExpense,
+) {
+  Map<int, dynamic> modifiedTransactions = getBarChartData(transactions);
+  return modifiedTransactions.map((key, value) =>
+      MapEntry(key, isExpense ? value['totalExpense'] : value['totalIncome']));
 }
