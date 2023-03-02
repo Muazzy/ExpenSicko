@@ -1,5 +1,6 @@
 import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/screens/home/pdf_preview_screen.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/user_profile.dart/profile_header.dart';
 import 'package:flutter/material.dart';
@@ -84,6 +85,30 @@ class UserProfile extends StatelessWidget {
             ),
           ),
           const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Get monthly report'),
+                IconButton(
+                  onPressed: () async {
+                    // await
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => PdfPreviewScreen()));
+                  },
+                  icon: const Icon(Icons.print),
+                ),
+              ],
+            ),
+          ),
+          // const Spacer(),
+          // SizedBox(
+          //   height: 24,
+          // ),
+
           //TODO logout and generate report buttons here.
         ],
       ),
