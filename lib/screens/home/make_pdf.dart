@@ -1,167 +1,140 @@
 import 'dart:typed_data';
 
+import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
 import 'dart:io';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:printing/printing.dart';
+
+import '../../model/transaction_model.dart';
 
 Future<Uint8List> makePdf({
   required Uint8List pieChartImage,
   required Uint8List barChartImage,
+  required bool isExpense,
+  required List<AppTransaction> transactions,
 }) async {
   final pdf = Document();
-  final imageLogo = MemoryImage(
-      (await rootBundle.load('assets/onBoard1.png')).buffer.asUint8List());
   final pieChart = MemoryImage(pieChartImage);
   final barChart = MemoryImage(barChartImage);
+
+  final now = DateTime.now();
+  final month = months[now.month - 1].toUpperCase().substring(0, 3);
+  final thisMonthsTransactions = transactions
+      .where((element) => element.dateTime.month == now.month)
+      .toList();
+  final double totalExpense =
+      addAllTransactionAmount(true, thisMonthsTransactions);
+  final double totalIncome =
+      addAllTransactionAmount(false, thisMonthsTransactions);
+  final double balance = totalIncome - totalExpense;
+
   pdf.addPage(
     Page(
       build: (context) {
         return Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                'Monthly Report ($month ${now.year})',
+                style: Theme.of(context).header1.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Divider(
+              height: 1,
+              borderStyle: BorderStyle.solid,
+            ),
+            Spacer(),
+            Table(
+              border: TableBorder.all(color: PdfColors.black),
               children: [
-                Column(
+                TableRow(
                   children: [
-                    Text("Attention to: "),
+                    customText('Total Income'),
+                    customText(
+                      '$totalIncome',
+                    )
                   ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
                 ),
-                SizedBox(
-                  height: 150,
-                  width: 150,
-                  child: Image(imageLogo),
+                TableRow(
+                  children: [
+                    customText(
+                      'Total Expense',
+                    ),
+                    customText(
+                      '$totalExpense',
+                    )
+                  ],
+                ),
+                TableRow(
+                  children: [
+                    customText(
+                      'Balance',
+                    ),
+                    customText(
+                      '$balance',
+                      color:
+                          balance.isNegative ? PdfColors.red : PdfColors.green,
+                      fontWeight: FontWeight.bold,
+                    )
+                  ],
+                )
+              ],
+            ),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    isExpense ? 'Expense Stats' : 'Income Stats',
+                    style: Theme.of(context).header1.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    textAlign: TextAlign.left,
+                  ),
                 ),
               ],
             ),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  children: [
-                    Text("Attention to: "),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 190,
+                  width: 190,
                   child: Image(pieChart),
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text("Attention to: "),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                ),
                 SizedBox(
-                  height: 150,
-                  width: 150,
+                  height: 300,
+                  width: 300,
                   child: Image(barChart),
                 ),
               ],
             ),
-            // Container(height: 50),
-            // Table(
-            //   border: TableBorder.all(color: PdfColors.black),
-            //   children: [
-            //     TableRow(
-            //       children: [
-            //         Padding(
-            //           child: Text(
-            //             'INVOICE FOR PAYMENT',
-            //             style: Theme.of(context).header4,
-            //             textAlign: TextAlign.center,
-            //           ),
-            //           padding: EdgeInsets.all(20),
-            //         ),
-            //       ],
-            //     ),
-            //     ...invoice.items.map(
-            //       (e) => TableRow(
-            //         children: [
-            //           Expanded(
-            //             child: PaddedText(e.description),
-            //             flex: 2,
-            //           ),
-            //           Expanded(
-            //             child: PaddedText("\$${e.cost}"),
-            //             flex: 1,
-            //           )
-            //         ],
-            //       ),
-            //     ),
-            //     TableRow(
-            //       children: [
-            //         PaddedText('TAX', align: TextAlign.right),
-            //         PaddedText('\$${(invoice.totalCost() * 0.1).toStringAsFixed(2)}'),
-            //       ],
-            //     ),
-            //     TableRow(
-            //       children: [PaddedText('TOTAL', align: TextAlign.right), PaddedText('\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')],
-            //     )
-            //   ],
-            // ),
-            // Padding(
-            //   child: Text(
-            //     "THANK YOU FOR YOUR CUSTOM!",
-            //     style: Theme.of(context).header2,
-            //   ),
-            //   padding: EdgeInsets.all(20),
-            // ),
-            // Text("Please forward the below slip to your accounts payable department."),
-            // Divider(
-            //   height: 1,
-            //   borderStyle: BorderStyle.dashed,
-            // ),
-            // Container(height: 50),
-            // Table(
-            //   border: TableBorder.all(color: PdfColors.black),
-            //   children: [
-            //     TableRow(
-            //       children: [
-            //         PaddedText('Account Number'),
-            //         PaddedText(
-            //           '1234 1234',
-            //         )
-            //       ],
-            //     ),
-            //     TableRow(
-            //       children: [
-            //         PaddedText(
-            //           'Account Name',
-            //         ),
-            //         PaddedText(
-            //           'ADAM FAMILY TRUST',
-            //         )
-            //       ],
-            //     ),
-            //     TableRow(
-            //       children: [
-            //         PaddedText(
-            //           'Total Amount to be Paid',
-            //         ),
-            //         PaddedText('\$${(invoice.totalCost() * 1.1).toStringAsFixed(2)}')
-            //       ],
-            //     )
-            //   ],
-            // ),
-            // Padding(
-            //   padding: EdgeInsets.all(30),
-            //   child: Text(
-            //     'Please ensure all cheques are payable to the ADAM FAMILY TRUST.',
-            //     style: Theme.of(context).header3.copyWith(
-            //           fontStyle: FontStyle.italic,
-            //         ),
-            //     textAlign: TextAlign.center,
-            //   ),
-            // )
+            Spacer(),
+            Divider(
+              height: 1,
+              borderStyle: BorderStyle.dashed,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Generated with ExpenSicko',
+                style: Theme.of(context).header5.copyWith(
+                      color: const PdfColor.fromInt(0xff6A68D0),
+                      fontWeight: FontWeight.bold,
+                    ),
+                textAlign: TextAlign.center,
+              ),
+            )
           ],
         );
       },
@@ -169,3 +142,19 @@ Future<Uint8List> makePdf({
   );
   return pdf.save();
 }
+
+Widget customText(
+  final String text, {
+  final TextAlign align = TextAlign.left,
+  final PdfColor color = PdfColors.black,
+  final FontWeight fontWeight = FontWeight.normal,
+}) =>
+    Padding(
+      padding: const EdgeInsets.all(10),
+      child: Text(
+        text,
+        textAlign: align,
+        style: TextStyle.defaultStyle()
+            .copyWith(color: color, fontWeight: fontWeight),
+      ),
+    );

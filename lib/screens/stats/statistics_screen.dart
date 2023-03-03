@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:expense_tracker_v2/res/colors.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
-import 'package:expense_tracker_v2/screens/stats/example.dart';
+import 'package:expense_tracker_v2/screens/stats/barchart.dart';
 import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:expense_tracker_v2/widgets/stats/category_item_customtext.dart';
@@ -206,6 +206,7 @@ class _StatScreenState extends State<StatScreen> {
                     ],
                   ),
                 ),
+                Spacer(),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
@@ -223,22 +224,27 @@ class _StatScreenState extends State<StatScreen> {
                           } catch (e) {
                             print(e);
                           }
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PdfPreviewScreen(
-                                barChartImage: barChartImage!,
-                                pieChartImage: pieChartImage!,
+
+                          if (context.mounted) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PdfPreviewScreen(
+                                  barChartImage: barChartImage!,
+                                  pieChartImage: pieChartImage!,
+                                  isExpense: isExpense,
+                                  transactions: transactions,
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         },
                         icon: const Icon(Icons.print),
                       ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 42),
+                const Spacer(),
               ],
             ),
           );

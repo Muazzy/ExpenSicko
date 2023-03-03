@@ -154,35 +154,33 @@ class BarChartWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print(getValues(transactions));
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
-        child: AspectRatio(
-          aspectRatio: 2,
-          child: BarChart(
-            BarChartData(
-              alignment: BarChartAlignment.spaceBetween,
-              maxY: 8.5 + betweenSpace,
-              titlesData: FlTitlesData(
-                leftTitles: AxisTitles(),
-                rightTitles: AxisTitles(),
-                topTitles: AxisTitles(),
-                bottomTitles: AxisTitles(
-                  sideTitles: SideTitles(
-                    showTitles: true,
-                    getTitlesWidget: bottomTitles,
-                    reservedSize: 30,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+      child: AspectRatio(
+        aspectRatio: 2,
+        child: BarChart(
+          BarChartData(
+            alignment: BarChartAlignment.spaceBetween,
+            maxY: 8.5 + betweenSpace,
+            titlesData: FlTitlesData(
+              leftTitles: AxisTitles(),
+              rightTitles: AxisTitles(),
+              topTitles: AxisTitles(),
+              bottomTitles: AxisTitles(
+                sideTitles: SideTitles(
+                  showTitles: true,
+                  getTitlesWidget: bottomTitles,
+                  reservedSize: 30,
                 ),
               ),
-              barTouchData: BarTouchData(enabled: false),
-              borderData: FlBorderData(show: false),
-              gridData: FlGridData(show: false),
-              barGroups: getValues(transactions)
-                  .entries
-                  .map((e) => generateGroupData(index: e.key, value: e.value))
-                  .toList(),
             ),
+            barTouchData: BarTouchData(enabled: false),
+            borderData: FlBorderData(show: false),
+            gridData: FlGridData(show: false),
+            barGroups: getValues(transactions)
+                .entries
+                .map((e) => generateGroupData(index: e.key, value: e.value))
+                .toList(),
           ),
         ),
       ),
