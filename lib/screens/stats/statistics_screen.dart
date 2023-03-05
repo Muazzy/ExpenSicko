@@ -23,12 +23,6 @@ class StatScreen extends StatefulWidget {
 }
 
 class _StatScreenState extends State<StatScreen> {
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
-
   late Uint8List? pieChartImage;
   late Uint8List? barChartImage;
 
@@ -206,7 +200,7 @@ class _StatScreenState extends State<StatScreen> {
                     ],
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
@@ -222,7 +216,7 @@ class _StatScreenState extends State<StatScreen> {
                             barChartImage =
                                 await barChartSSController.capture();
                           } catch (e) {
-                            print(e);
+                            debugPrint(e.toString());
                           }
 
                           if (context.mounted) {

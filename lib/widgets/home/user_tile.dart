@@ -1,5 +1,4 @@
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
 import 'package:flutter/material.dart';
 
 class UserTile extends StatelessWidget {

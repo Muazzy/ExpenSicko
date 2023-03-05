@@ -1,4 +1,4 @@
-import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/res/content.dart';
 
 final now = DateTime.now();
 

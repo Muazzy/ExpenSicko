@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/res/content.dart';
 import 'package:expense_tracker_v2/utils/date_utils.dart';
 import 'package:flutter/material.dart';
 
