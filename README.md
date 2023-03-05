@@ -1,16 +1,34 @@
-# expense_tracker_v2
+# Expense Tracker with Flutter & Firebase
 
-A new Flutter project.
+## Screenshots:
+### Onboarding Screens:
+![](./screenshots/ob1.png)
+![](./screenshots/ob2.png)
+### Auth Screens:
+![](./screenshots/signup.png)
+![](./screenshots/signin.png)
+![](./screenshots/phone_verification.png)
+![](./screenshots/enter_code.png)
+### Home Screen:
+![](./screenshots/home.png)
+![](./screenshots/delete.png)
+![](./screenshots/update.png)
+### Add Transaction:
+![](./screenshots/add_expense.png)
+![](./screenshots/add_income.png)
+![](./screenshots/datepicker.png)
+### Stats Screen:
+![](./screenshots/income_stats.png)
+![](./screenshots/expense_stats.png)
+### Generate Monthly report:
+![](./screenshots/pdf_report.png)
+![](./screenshots/pdf_report_2.png)
 
-## Getting Started
+## Design Inspo:
+[Dribble](https://dribbble.com/shots/14356673-Money-Management-App/attachments/6023247?mode=media)
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Most Useful Packages used in this project: 
+- pdf
+- screenshot
+- fl_chart
+- pin_put
