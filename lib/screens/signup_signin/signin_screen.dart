@@ -4,7 +4,6 @@ import 'package:expense_tracker_v2/widgets/signin_signup/custom_textfield.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/dont_have_acc.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/social_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';

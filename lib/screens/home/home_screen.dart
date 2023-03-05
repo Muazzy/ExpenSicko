@@ -1,19 +1,17 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
-import 'package:expense_tracker_v2/constants/image_paths.dart';
+import 'package:expense_tracker_v2/res/content.dart';
+import 'package:expense_tracker_v2/res/image_paths.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
-import 'package:expense_tracker_v2/utils/sort_transactions.dart';
 import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:expense_tracker_v2/widgets/home/balance_card.dart';
 import 'package:expense_tracker_v2/widgets/home/transaction_title.dart';
 import 'package:expense_tracker_v2/widgets/home/user_tile.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/custom_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -61,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     },
                     onProfileImageTap: () {
-                      Navigator.pushNamed(context, '/userProfile');
+                      // Navigator.pushNamed(context, '/userProfile'); //not including the
                     },
                     userImage: currentFirebaseUser.photoURL != null
                         ? Image.network(
@@ -70,7 +68,7 @@ class HomeScreen extends StatelessWidget {
                           )
                         : Transform.scale(
                             scale: 1.5,
-                            child: Image.asset(defaultUserImg),
+                            child: Image.asset(AppImagePaths.defaultUserImg),
                           ),
                     userName: userName ?? 'User',
                   ),

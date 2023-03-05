@@ -1,5 +1,5 @@
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/textstyles.dart';
+import 'package:expense_tracker_v2/res/textstyles.dart';
 import 'package:flutter/material.dart';
 
 class BalanceCard extends StatelessWidget {
@@ -25,7 +25,7 @@ class BalanceCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: const Alignment(-0.8, -0.8),
-            stops: [0.0, 0.5, 0.5, 1],
+            stops: const [0.0, 0.5, 0.5, 1],
             colors: [
               AppColors.darkPurple.withOpacity(1),
               AppColors.darkPurple.withOpacity(1),
@@ -105,7 +105,7 @@ class BalanceCard extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topRight,
                       end: const Alignment(0.8, 0.15),
-                      stops: [0.0, 0.5, 0.5, 1],
+                      stops: const [0.0, 0.5, 0.5, 1],
                       colors: [
                         AppColors.darkPurple.withOpacity(0.5),
                         AppColors.darkPurple.withOpacity(0.5),

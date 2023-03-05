@@ -1,5 +1,5 @@
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/textstyles.dart';
+import 'package:expense_tracker_v2/res/textstyles.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/screens/home/add_transaction_screen.dart';
 import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
@@ -47,7 +47,7 @@ class TransactionTile extends StatelessWidget {
             await _openUpdateDialog(context);
             break;
           default:
-            print('Unhandled dismiss of an ExpenseListTile: $direction');
+            debugPrint('Unhandled dismiss of an ExpenseListTile: $direction');
             break;
         }
         return false;
