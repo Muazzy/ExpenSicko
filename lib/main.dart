@@ -56,7 +56,7 @@ void main() async {
           '/numberSignIn': (context) => const SignInWithNumber(),
           '/rootScreen': (context) => const RootScreen(),
           '/addTransaction': (context) => AddTransaction(),
-          '/userProfile': (context) => UserProfile()
+          '/userProfile': (context) => const UserProfile()
         },
       ),
     ),

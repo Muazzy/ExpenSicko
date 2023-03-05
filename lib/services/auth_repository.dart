@@ -64,9 +64,9 @@ class AuthRepository extends ChangeNotifier {
       notifyListeners();
       // if you want to display your own custom error message
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        debugPrint('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        debugPrint('The account already exists for that email.');
       }
       showSnackBar(
           context, e.message!); // Displaying the firebase error message
@@ -145,6 +145,10 @@ class AuthRepository extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
       showSnackBar(context, e.message!); // Displaying the error message
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      showSnackBar(context, e.toString());
     }
   }
 
@@ -183,7 +187,7 @@ class AuthRepository extends ChangeNotifier {
                 notifyListeners();
                 FocusScope.of(context).unfocus();
 
-                print(codeController.text.trim());
+                debugPrint(codeController.text.trim());
                 PhoneAuthCredential credential = PhoneAuthProvider.credential(
                   verificationId: verificationId,
                   smsCode: codeController.text.trim(),
@@ -197,6 +201,8 @@ class AuthRepository extends ChangeNotifier {
                     notifyListeners();
                     if (currentUserUid.isNotEmpty) {
                       showSnackBar(context, 'Signing in');
+                      await FirebaseAuth.instance.currentUser
+                          ?.updateDisplayName(phoneNumber);
                       await Future.delayed(
                         const Duration(milliseconds: 200),
                         () => Navigator.pushNamedAndRemoveUntil(

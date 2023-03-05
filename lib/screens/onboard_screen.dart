@@ -1,6 +1,6 @@
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
-import 'package:expense_tracker_v2/constants/image_paths.dart';
+import 'package:expense_tracker_v2/res/content.dart';
+import 'package:expense_tracker_v2/res/image_paths.dart';
 import 'package:expense_tracker_v2/model/onboard_page_model.dart';
 import 'package:expense_tracker_v2/widgets/onboard/dot_indicators.dart';
 import 'package:expense_tracker_v2/widgets/signin_signup/signin_and_get_started_btn.dart';
@@ -19,8 +19,10 @@ class _OnBoardScreenState extends State<OnBoardScreen> {
   late PageController _pageController;
 
   List<OnBoardPageModel> pages = <OnBoardPageModel>[
-    OnBoardPageModel(image: obImg1, heading: obHeading1, bodyText: obBody1),
-    OnBoardPageModel(image: obImg2, heading: obHeading2, bodyText: obBody2),
+    OnBoardPageModel(
+        image: AppImagePaths.obImg1, heading: obHeading1, bodyText: obBody1),
+    OnBoardPageModel(
+        image: AppImagePaths.obImg2, heading: obHeading2, bodyText: obBody2),
   ];
 
   int currentPage = 0;

@@ -1,6 +1,5 @@
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
-import 'package:expense_tracker_v2/screens/home/pdf_preview_screen.dart';
+import 'package:expense_tracker_v2/res/content.dart';
 import 'package:expense_tracker_v2/services/auth_repository.dart';
 import 'package:expense_tracker_v2/widgets/user_profile.dart/profile_header.dart';
 import 'package:flutter/material.dart';
@@ -108,8 +107,6 @@ class UserProfile extends StatelessWidget {
           // SizedBox(
           //   height: 24,
           // ),
-
-          //TODO logout and generate report buttons here.
         ],
       ),
     );

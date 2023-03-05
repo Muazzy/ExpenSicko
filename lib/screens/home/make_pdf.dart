@@ -1,12 +1,9 @@
 import 'dart:typed_data';
 
-import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/res/content.dart';
 import 'package:expense_tracker_v2/utils/transaction_conversions.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart';
-import 'dart:io';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:printing/printing.dart';
 
 import '../../model/transaction_model.dart';
 

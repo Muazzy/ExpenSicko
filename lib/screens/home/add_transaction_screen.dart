@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:expense_tracker_v2/res/colors.dart';
-import 'package:expense_tracker_v2/constants/content.dart';
+import 'package:expense_tracker_v2/res/content.dart';
 import 'package:expense_tracker_v2/model/transaction_model.dart';
 import 'package:expense_tracker_v2/services/data_repository.dart';
 import 'package:expense_tracker_v2/utils/custom_snackbar.dart';
@@ -39,6 +39,8 @@ class _AddTransactionState extends State<AddTransaction> {
   late TextEditingController transactionAmountController;
   bool isExpense = true;
   int selectedCategory = 0;
+  final formKey = GlobalKey<FormState>();
+
   @override
   void dispose() {
     // dispose it here
@@ -141,43 +143,47 @@ class _AddTransactionState extends State<AddTransaction> {
             child: ElevatedButton(
               onPressed: widget.isUpdate
                   ? () async {
-                      await widget.transaction
-                          .updateWith(
-                            amount: double.tryParse(
-                                transactionAmountController.text),
-                            category: selectedCategory,
-                            dataTime: selectedDate,
-                            isExpense: isExpense,
-                            name: transactionNameController.text,
-                          )
-                          .onError(
-                            (error, stackTrace) => showSnackBar(
-                              context,
-                              error.toString(),
-                            ),
-                          )
-                          .whenComplete(() {
-                        showSnackBar(context, 'updated');
-                        Navigator.pop(context);
-                      });
+                      if (formKey.currentState!.validate()) {
+                        await widget.transaction
+                            .updateWith(
+                              amount: double.tryParse(
+                                  transactionAmountController.text),
+                              category: selectedCategory,
+                              dataTime: selectedDate,
+                              isExpense: isExpense,
+                              name: transactionNameController.text,
+                            )
+                            .onError(
+                              (error, stackTrace) => showSnackBar(
+                                context,
+                                error.toString(),
+                              ),
+                            )
+                            .whenComplete(() {
+                          showSnackBar(context, 'updated');
+                          Navigator.pop(context);
+                        });
+                      }
                     }
                   : () {
-                      context
-                          .read<DataRepository>()
-                          .addTransaction(
-                            transactionNameController.text.isEmpty
-                                ? 'untitled'
-                                : transactionNameController.text,
-                            transactionAmountController.text.isEmpty
-                                ? 0
-                                : double.parse(
-                                    transactionAmountController.text),
-                            selectedDate,
-                            isExpense,
-                            selectedCategory,
-                            context,
-                          )
-                          .whenComplete(() => Navigator.pop(context));
+                      if (formKey.currentState!.validate()) {
+                        context
+                            .read<DataRepository>()
+                            .addTransaction(
+                              transactionNameController.text.isEmpty
+                                  ? 'untitled'
+                                  : transactionNameController.text,
+                              transactionAmountController.text.isEmpty
+                                  ? 0
+                                  : double.parse(
+                                      transactionAmountController.text),
+                              selectedDate,
+                              isExpense,
+                              selectedCategory,
+                              context,
+                            )
+                            .whenComplete(() => Navigator.pop(context));
+                      }
                     },
               style: ButtonStyle(
                 elevation: MaterialStateProperty.all(3),
@@ -324,6 +330,7 @@ class _AddTransactionState extends State<AddTransaction> {
             ),
             const SizedBox(height: 10),
             Form(
+              key: formKey,
               child: Container(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
@@ -369,6 +376,15 @@ class _AddTransactionState extends State<AddTransaction> {
                       ),
                       Expanded(
                         child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty ||
+                                value == '' ||
+                                (value.length == 1 && value == '0')) {
+                              showSnackBar(context, 'empty input not allowed');
+                              return 'empty input not allowed';
+                            }
+                            return null;
+                          },
                           controller: transactionAmountController,
                           onTap: () {
                             transactionAmountController.clear();
@@ -387,9 +403,18 @@ class _AddTransactionState extends State<AddTransaction> {
                             ),
                             border: InputBorder.none,
                             hintText: 'Amount',
+                            errorMaxLines: 1,
+                            // errorText: '','empty input not allowed'
+                            errorStyle: TextStyle(
+                              color: Colors.transparent,
+                              fontSize: 0,
+                            ),
                           ),
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
+                            FilteringTextInputFormatter.deny(
+                              RegExp(r'^0+'),
+                            ),
                           ],
                         ),
                       ),
